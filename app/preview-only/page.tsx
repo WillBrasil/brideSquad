@@ -310,13 +310,17 @@ export default function PreviewOnlyPage() {
               </CardHeader>
               <CardContent className="text-center py-8">
                 <p className="text-gray-500 mb-4">Adicione músicas personalizadas aos seus cartões</p>
-                <MusicPlayer 
-                  title="Dancing Queen - ABBA" 
-                  videoId="xFrGuyw1V8s"
-                  isPremium={true}
-                />
-                <Lock className="h-12 w-12 mx-auto text-gray-300 mb-4" />
-                <p className="text-sm text-gray-400">Recurso disponível no plano Premium</p>
+                <div className="max-w-md mx-auto">
+                  <MusicPlayer 
+                    title="Dua Lipa - New Rules" 
+                    videoId="k2qgadSvNyU"
+                    isPremium={true}
+                  />
+                </div>
+                <div className="mt-6">
+                  <Lock className="h-12 w-12 mx-auto text-gray-300 mb-4" />
+                  <p className="text-sm text-gray-400">Recurso disponível no plano Premium</p>
+                </div>
               </CardContent>
             </Card>
 
