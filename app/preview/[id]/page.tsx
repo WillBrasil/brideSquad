@@ -12,11 +12,11 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { useRouter } from "next/navigation"
 
-export default function PreviewPage({ params }: { params: { id: string } }) {
+export default function PreviewPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter()
-  const id = use(Promise.resolve(params.id))
-  const [previewData, setPreviewData] = useState<any>(null)
+  const { id } = use(params)
   const [loading, setLoading] = useState(true)
+  const [previewData, setPreviewData] = useState<any>(null)
 
   // Simular a busca de dados do cartão com base no ID
   useEffect(() => {
