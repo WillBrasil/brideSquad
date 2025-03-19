@@ -11,6 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import Image from "next/image"
+import { MusicPlayer } from "@/components/music-player"
 
 export default function PreviewOnlyPage() {
   const router = useRouter()
@@ -252,10 +253,6 @@ export default function PreviewOnlyPage() {
                   <MessageCircle className="h-4 w-4 text-blue-500 mr-1" />
                   <span className="text-sm text-gray-500">2 mensagens</span>
                 </div>
-                <div className="flex items-center">
-                  <Music className="h-4 w-4 text-purple-500 mr-1" />
-                  <span className="text-sm text-gray-500">Dancing Queen - ABBA</span>
-                </div>
               </div>
               <div className="flex items-center space-x-2">
                 <Button variant="ghost" size="sm" className="text-gray-500">
@@ -313,15 +310,11 @@ export default function PreviewOnlyPage() {
               </CardHeader>
               <CardContent className="text-center py-8">
                 <p className="text-gray-500 mb-4">Adicione músicas personalizadas aos seus cartões</p>
-                <div className="bg-pink-50 p-4 rounded-lg mb-4">
-                  <div className="flex items-center justify-center mb-2">
-                    <Music className="h-6 w-6 text-pink-500 mr-2" />
-                    <span className="text-sm font-medium">Dancing Queen - ABBA</span>
-                  </div>
-                  <div className="w-full bg-pink-200 rounded-full h-1">
-                    <div className="w-1/3 bg-pink-500 h-1 rounded-full"></div>
-                  </div>
-                </div>
+                <MusicPlayer 
+                  title="Dancing Queen - ABBA" 
+                  videoId="xFrGuyw1V8s"
+                  isPremium={true}
+                />
                 <Lock className="h-12 w-12 mx-auto text-gray-300 mb-4" />
                 <p className="text-sm text-gray-400">Recurso disponível no plano Premium</p>
               </CardContent>

@@ -596,16 +596,16 @@ export default function EditCardPage({ params }: PageProps) {
         <div className="container mx-auto px-4">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div className="flex items-center w-full sm:w-auto">
-              <Link href="/dashboard">
+            <Link href="/dashboard">
                 <Button variant="ghost" size="sm" className="mr-2 hover:bg-pink-50">
-                  <ChevronLeft className="h-4 w-4 mr-1" />
-                  Voltar
-                </Button>
-              </Link>
+                <ChevronLeft className="h-4 w-4 mr-1" />
+                Voltar
+              </Button>
+            </Link>
               <div className="flex-1 sm:flex-none">
                 <h1 className="text-xl font-semibold text-gray-800">Editando: {cardData.title}</h1>
-              </div>
             </div>
+          </div>
 
             <div className="flex items-center space-x-2 w-full sm:w-auto justify-end">
               <Button 
@@ -614,9 +614,9 @@ export default function EditCardPage({ params }: PageProps) {
                 onClick={handlePreview}
                 className="hover:bg-pink-50 hover:text-pink-600"
               >
-                <Eye className="h-4 w-4 mr-2" />
-                Visualizar
-              </Button>
+              <Eye className="h-4 w-4 mr-2" />
+              Visualizar
+            </Button>
 
               <Button 
                 className="bg-pink-600 hover:bg-pink-700 text-white" 
@@ -624,7 +624,7 @@ export default function EditCardPage({ params }: PageProps) {
                 onClick={handleSave} 
                 disabled={isSaving}
               >
-                {isSaving ? (
+              {isSaving ? (
                   <div className="flex items-center">
                     <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
@@ -632,40 +632,40 @@ export default function EditCardPage({ params }: PageProps) {
                     </svg>
                     Salvando...
                   </div>
-                ) : (
-                  <>
-                    <Save className="h-4 w-4 mr-2" />
-                    Salvar
-                  </>
-                )}
-              </Button>
+              ) : (
+                <>
+                  <Save className="h-4 w-4 mr-2" />
+                  Salvar
+                </>
+              )}
+            </Button>
 
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="sm" className="hover:bg-pink-50">
-                    <Avatar className="h-8 w-8">
-                      <AvatarFallback className="bg-pink-200 text-pink-700">MS</AvatarFallback>
-                    </Avatar>
-                  </Button>
-                </DropdownMenuTrigger>
+                  <Avatar className="h-8 w-8">
+                    <AvatarFallback className="bg-pink-200 text-pink-700">MS</AvatarFallback>
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56">
                   <DropdownMenuLabel className="font-semibold">Minha Conta</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
+                <DropdownMenuSeparator />
                   <DropdownMenuItem className="cursor-pointer hover:bg-pink-50">
                     <User className="mr-2 h-4 w-4 text-pink-600" />
-                    <span>Perfil</span>
-                  </DropdownMenuItem>
+                  <span>Perfil</span>
+                </DropdownMenuItem>
                   <DropdownMenuItem className="cursor-pointer hover:bg-pink-50">
                     <Sparkles className="mr-2 h-4 w-4 text-pink-600" />
-                    <span>Meus Cartões</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
+                  <span>Meus Cartões</span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
                   <DropdownMenuItem className="cursor-pointer hover:bg-pink-50 text-red-600">
-                    <LogOut className="mr-2 h-4 w-4" />
-                    <span>Sair</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Sair</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             </div>
           </div>
         </div>
@@ -708,7 +708,7 @@ export default function EditCardPage({ params }: PageProps) {
                 ].map((item) => {
                   const Icon = item.icon
                   return (
-                    <Button
+                <Button
                       key={item.id}
                       variant={activeTab === item.id ? "default" : "ghost"}
                       className={`w-full justify-start transition-colors ${
@@ -720,7 +720,7 @@ export default function EditCardPage({ params }: PageProps) {
                     >
                       <Icon className="h-4 w-4 mr-2" />
                       {item.label}
-                    </Button>
+                </Button>
                   )
                 })}
               </nav>
@@ -812,497 +812,497 @@ export default function EditCardPage({ params }: PageProps) {
                   </TabsList>
 
                   <TabsContent value="basic">
-                    <div className="space-y-6">
+                  <div className="space-y-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="title">Título do Cartão</Label>
+                      <Input
+                        id="title"
+                        value={cardData.title}
+                        onChange={(e) => updateBasicInfo("title", e.target.value)}
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="description">Descrição</Label>
+                      <Textarea
+                        id="description"
+                        value={cardData.description}
+                        onChange={(e) => updateBasicInfo("description", e.target.value)}
+                        className="min-h-[100px]"
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="title">Título do Cartão</Label>
+                        <Label htmlFor="date">Data do Evento</Label>
                         <Input
-                          id="title"
-                          value={cardData.title}
-                          onChange={(e) => updateBasicInfo("title", e.target.value)}
+                          id="date"
+                          type="date"
+                          value={cardData.date}
+                          onChange={(e) => updateBasicInfo("date", e.target.value)}
                         />
                       </div>
 
                       <div className="space-y-2">
-                        <Label htmlFor="description">Descrição</Label>
-                        <Textarea
-                          id="description"
-                          value={cardData.description}
-                          onChange={(e) => updateBasicInfo("description", e.target.value)}
-                          className="min-h-[100px]"
+                        <Label htmlFor="location">Local</Label>
+                        <Input
+                          id="location"
+                          value={cardData.location}
+                          onChange={(e) => updateBasicInfo("location", e.target.value)}
                         />
-                      </div>
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="date">Data do Evento</Label>
-                          <Input
-                            id="date"
-                            type="date"
-                            value={cardData.date}
-                            onChange={(e) => updateBasicInfo("date", e.target.value)}
-                          />
-                        </div>
-
-                        <div className="space-y-2">
-                          <Label htmlFor="location">Local</Label>
-                          <Input
-                            id="location"
-                            value={cardData.location}
-                            onChange={(e) => updateBasicInfo("location", e.target.value)}
-                          />
-                        </div>
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="cover-image">Imagem de Capa</Label>
-                        <div className="border-2 border-dashed border-gray-200 rounded-lg p-8 text-center">
-                          {cardData.coverImage ? (
-                            <div className="relative">
-                              <div className="h-40 bg-pink-200 rounded-lg flex items-center justify-center">
-                                <ImageIcon className="h-10 w-10 text-pink-500" />
-                              </div>
-                              <Button
-                                variant="destructive"
-                                size="icon"
-                                className="absolute top-2 right-2 h-6 w-6"
-                                onClick={() => updateBasicInfo("coverImage", null)}
-                              >
-                                <X className="h-3 w-3" />
-                              </Button>
-                            </div>
-                          ) : (
-                            <>
-                              <ImageIcon className="h-10 w-10 mx-auto text-gray-400 mb-4" />
-                              <p className="text-sm text-gray-500 mb-2">Arraste uma imagem ou clique para selecionar</p>
-                              <Button variant="outline" size="sm">
-                                Selecionar Imagem
-                              </Button>
-                            </>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="status">Status do Cartão</Label>
-                        <Select value={cardData.status} onValueChange={(value: string) => updateBasicInfo("status", value)}>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Selecione o status" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="draft">Rascunho</SelectItem>
-                            <SelectItem value="published">Publicado</SelectItem>
-                          </SelectContent>
-                        </Select>
                       </div>
                     </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="cover-image">Imagem de Capa</Label>
+                      <div className="border-2 border-dashed border-gray-200 rounded-lg p-8 text-center">
+                        {cardData.coverImage ? (
+                          <div className="relative">
+                            <div className="h-40 bg-pink-200 rounded-lg flex items-center justify-center">
+                              <ImageIcon className="h-10 w-10 text-pink-500" />
+                            </div>
+                            <Button
+                              variant="destructive"
+                              size="icon"
+                              className="absolute top-2 right-2 h-6 w-6"
+                              onClick={() => updateBasicInfo("coverImage", null)}
+                            >
+                              <X className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        ) : (
+                          <>
+                            <ImageIcon className="h-10 w-10 mx-auto text-gray-400 mb-4" />
+                            <p className="text-sm text-gray-500 mb-2">Arraste uma imagem ou clique para selecionar</p>
+                            <Button variant="outline" size="sm">
+                              Selecionar Imagem
+                            </Button>
+                          </>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="status">Status do Cartão</Label>
+                        <Select value={cardData.status} onValueChange={(value: string) => updateBasicInfo("status", value)}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Selecione o status" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="draft">Rascunho</SelectItem>
+                          <SelectItem value="published">Publicado</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
                   </TabsContent>
 
                   <TabsContent value="hero">
-                    <div className="space-y-6">
-                      <div className="space-y-2">
-                        <Label htmlFor="hero-title">Título do Banner</Label>
-                        <Input
-                          id="hero-title"
-                          value={cardData.hero.title}
-                          onChange={(e) => updateHero("title", e.target.value)}
-                        />
-                      </div>
+                  <div className="space-y-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="hero-title">Título do Banner</Label>
+                      <Input
+                        id="hero-title"
+                        value={cardData.hero.title}
+                        onChange={(e) => updateHero("title", e.target.value)}
+                      />
+                    </div>
 
-                      <div className="space-y-2">
-                        <Label htmlFor="hero-subtitle">Subtítulo do Banner</Label>
-                        <Textarea
-                          id="hero-subtitle"
-                          value={cardData.hero.subtitle}
-                          onChange={(e) => updateHero("subtitle", e.target.value)}
-                        />
-                      </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="hero-subtitle">Subtítulo do Banner</Label>
+                      <Textarea
+                        id="hero-subtitle"
+                        value={cardData.hero.subtitle}
+                        onChange={(e) => updateHero("subtitle", e.target.value)}
+                      />
+                    </div>
 
-                      <div className="space-y-2">
-                        <Label htmlFor="hero-background">Imagem de Fundo</Label>
-                        <div className="border-2 border-dashed border-gray-200 rounded-lg p-8 text-center">
-                          {cardData.hero.backgroundImage ? (
-                            <div className="relative">
-                              <div className="h-40 bg-pink-200 rounded-lg flex items-center justify-center">
-                                <ImageIcon className="h-10 w-10 text-pink-500" />
-                              </div>
-                              <Button
-                                variant="destructive"
-                                size="icon"
-                                className="absolute top-2 right-2 h-6 w-6"
-                                onClick={() => updateHero("backgroundImage", null)}
-                              >
-                                <X className="h-3 w-3" />
-                              </Button>
+                    <div className="space-y-2">
+                      <Label htmlFor="hero-background">Imagem de Fundo</Label>
+                      <div className="border-2 border-dashed border-gray-200 rounded-lg p-8 text-center">
+                        {cardData.hero.backgroundImage ? (
+                          <div className="relative">
+                            <div className="h-40 bg-pink-200 rounded-lg flex items-center justify-center">
+                              <ImageIcon className="h-10 w-10 text-pink-500" />
                             </div>
-                          ) : (
-                            <>
-                              <ImageIcon className="h-10 w-10 mx-auto text-gray-400 mb-4" />
-                              <p className="text-sm text-gray-500 mb-2">Arraste uma imagem ou clique para selecionar</p>
-                              <Button variant="outline" size="sm">
-                                Selecionar Imagem
-                              </Button>
-                            </>
-                          )}
-                        </div>
-                        <p className="text-xs text-gray-500">Recomendado: imagem de alta resolução (1920x1080px)</p>
-                      </div>
-
-                      <div className="bg-gray-100 p-4 rounded-lg">
-                        <h3 className="font-medium mb-2">Prévia do Banner</h3>
-                        <div className="relative h-[200px] bg-gradient-to-r from-pink-400 to-pink-600 rounded-lg overflow-hidden flex items-center justify-center">
-                          <div className="absolute inset-0 bg-black/30"></div>
-                          <div className="relative z-10 text-center px-4">
-                            <h1 className="text-2xl font-bold text-white mb-2">{cardData.hero.title}</h1>
-                            <p className="text-white">{cardData.hero.subtitle}</p>
+                            <Button
+                              variant="destructive"
+                              size="icon"
+                              className="absolute top-2 right-2 h-6 w-6"
+                              onClick={() => updateHero("backgroundImage", null)}
+                            >
+                              <X className="h-3 w-3" />
+                            </Button>
                           </div>
+                        ) : (
+                          <>
+                            <ImageIcon className="h-10 w-10 mx-auto text-gray-400 mb-4" />
+                            <p className="text-sm text-gray-500 mb-2">Arraste uma imagem ou clique para selecionar</p>
+                            <Button variant="outline" size="sm">
+                              Selecionar Imagem
+                            </Button>
+                          </>
+                        )}
+                      </div>
+                      <p className="text-xs text-gray-500">Recomendado: imagem de alta resolução (1920x1080px)</p>
+                    </div>
+
+                    <div className="bg-gray-100 p-4 rounded-lg">
+                      <h3 className="font-medium mb-2">Prévia do Banner</h3>
+                      <div className="relative h-[200px] bg-gradient-to-r from-pink-400 to-pink-600 rounded-lg overflow-hidden flex items-center justify-center">
+                        <div className="absolute inset-0 bg-black/30"></div>
+                        <div className="relative z-10 text-center px-4">
+                          <h1 className="text-2xl font-bold text-white mb-2">{cardData.hero.title}</h1>
+                          <p className="text-white">{cardData.hero.subtitle}</p>
                         </div>
                       </div>
                     </div>
+                  </div>
                   </TabsContent>
 
                   <TabsContent value="features">
-                    <div className="space-y-6">
-                      <div className="flex justify-between items-center">
-                        <h3 className="text-lg font-medium">Recursos</h3>
-                        <Button variant="outline" size="sm" onClick={addFeature}>
-                          <Plus className="h-4 w-4 mr-2" />
-                          Adicionar Recurso
-                        </Button>
-                      </div>
-
-                      <div className="grid grid-cols-1 gap-6">
-                        {cardData.features.map((feature) => (
-                          <Card key={feature.id} className="overflow-hidden">
-                            <CardHeader className="pb-2">
-                              <div className="flex justify-between items-start">
-                                <div className="flex items-center">
-                                  <div
-                                    className={`w-10 h-10 rounded-lg ${feature.color} flex items-center justify-center mr-3`}
-                                  >
-                                    <span className="text-xl">{feature.icon}</span>
-                                  </div>
-                                  <CardTitle className="text-lg">{feature.title}</CardTitle>
-                                </div>
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  className="text-red-500 hover:text-red-700 hover:bg-red-50 h-8 w-8"
-                                  onClick={() => removeFeature(feature.id)}
-                                >
-                                  <Trash2 className="h-4 w-4" />
-                                </Button>
-                              </div>
-                            </CardHeader>
-                            <CardContent className="space-y-4">
-                              <div className="space-y-2">
-                                <Label htmlFor={`feature-title-${feature.id}`}>Título</Label>
-                                <Input
-                                  id={`feature-title-${feature.id}`}
-                                  value={feature.title}
-                                  onChange={(e) => updateFeature(feature.id, "title", e.target.value)}
-                                />
-                              </div>
-
-                              <div className="space-y-2">
-                                <Label htmlFor={`feature-desc-${feature.id}`}>Descrição</Label>
-                                <Textarea
-                                  id={`feature-desc-${feature.id}`}
-                                  value={feature.description}
-                                  onChange={(e) => updateFeature(feature.id, "description", e.target.value)}
-                                />
-                              </div>
-
-                              <div className="grid grid-cols-2 gap-4">
-                                <div className="space-y-2">
-                                  <Label htmlFor={`feature-icon-${feature.id}`}>Ícone</Label>
-                                  <Select
-                                    value={feature.icon}
-                                    onValueChange={(value: string) => updateFeature(feature.id, "icon", value)}
-                                  >
-                                    <SelectTrigger>
-                                      <SelectValue placeholder="Selecione um ícone" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                      <SelectItem value="📸">📸 Câmera</SelectItem>
-                                      <SelectItem value="🗓️">🗓️ Calendário</SelectItem>
-                                      <SelectItem value="👗">👗 Vestido</SelectItem>
-                                      <SelectItem value="👯‍♀️">👯‍♀️ Madrinhas</SelectItem>
-                                      <SelectItem value="💎">💎 Diamante</SelectItem>
-                                      <SelectItem value="🔗">🔗 Link</SelectItem>
-                                      <SelectItem value="🎉">🎉 Festa</SelectItem>
-                                      <SelectItem value="💃">💃 Dança</SelectItem>
-                                      <SelectItem value="🥂">🥂 Brinde</SelectItem>
-                                    </SelectContent>
-                                  </Select>
-                                </div>
-
-                                <div className="space-y-2">
-                                  <Label htmlFor={`feature-color-${feature.id}`}>Cor de Fundo</Label>
-                                  <Select
-                                    value={feature.color}
-                                    onValueChange={(value: string) => updateFeature(feature.id, "color", value)}
-                                  >
-                                    <SelectTrigger>
-                                      <SelectValue placeholder="Selecione uma cor" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                      <SelectItem value="bg-pink-100">Rosa</SelectItem>
-                                      <SelectItem value="bg-purple-100">Roxo</SelectItem>
-                                      <SelectItem value="bg-blue-100">Azul</SelectItem>
-                                      <SelectItem value="bg-green-100">Verde</SelectItem>
-                                      <SelectItem value="bg-yellow-100">Amarelo</SelectItem>
-                                      <SelectItem value="bg-red-100">Vermelho</SelectItem>
-                                    </SelectContent>
-                                  </Select>
-                                </div>
-                              </div>
-
-                              <div className="space-y-2">
-                                <Label htmlFor={`feature-image-${feature.id}`}>Imagem (opcional)</Label>
-                                <div className="border-2 border-dashed border-gray-200 rounded-lg p-4 text-center">
-                                  {feature.image ? (
-                                    <div className="relative">
-                                      <div className="h-32 bg-pink-200 rounded-lg flex items-center justify-center">
-                                        <ImageIcon className="h-8 w-8 text-pink-500" />
-                                      </div>
-                                      <Button
-                                        variant="destructive"
-                                        size="icon"
-                                        className="absolute top-2 right-2 h-6 w-6"
-                                        onClick={() => updateFeature(feature.id, "image", null)}
-                                      >
-                                        <X className="h-3 w-3" />
-                                      </Button>
-                                    </div>
-                                  ) : (
-                                    <>
-                                      <ImageIcon className="h-8 w-8 mx-auto text-gray-400 mb-2" />
-                                      <p className="text-xs text-gray-500 mb-2">Clique para selecionar</p>
-                                      <Button variant="outline" size="sm">
-                                        Selecionar
-                                      </Button>
-                                    </>
-                                  )}
-                                </div>
-                              </div>
-                            </CardContent>
-                          </Card>
-                        ))}
-                      </div>
+                  <div className="space-y-6">
+                    <div className="flex justify-between items-center">
+                      <h3 className="text-lg font-medium">Recursos</h3>
+                      <Button variant="outline" size="sm" onClick={addFeature}>
+                        <Plus className="h-4 w-4 mr-2" />
+                        Adicionar Recurso
+                      </Button>
                     </div>
-                  </TabsContent>
 
-                  <TabsContent value="testimonials">
-                    <div className="space-y-6">
-                      <div className="flex justify-between items-center">
-                        <h3 className="text-lg font-medium">Depoimentos</h3>
-                        <Button variant="outline" size="sm" onClick={addTestimonial}>
-                          <Plus className="h-4 w-4 mr-2" />
-                          Adicionar Depoimento
-                        </Button>
-                      </div>
-
-                      <div className="grid grid-cols-1 gap-4">
-                        {cardData.testimonials.map((testimonial) => (
-                          <Card key={testimonial.id} className="overflow-hidden">
-                            <CardContent className="p-4">
-                              <div className="flex justify-between items-start mb-3">
-                                <div>
-                                  <h4 className="font-medium">{testimonial.name}</h4>
-                                  <p className="text-sm text-pink-600">{testimonial.role}</p>
-                                </div>
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  className="text-red-500 hover:text-red-700 hover:bg-red-50 h-8 w-8"
-                                  onClick={() => removeTestimonial(testimonial.id)}
-                                >
-                                  <Trash2 className="h-4 w-4" />
-                                </Button>
-                              </div>
-
-                              <div className="space-y-4">
-                                <div className="space-y-2">
-                                  <Label htmlFor={`testimonial-quote-${testimonial.id}`}>Depoimento</Label>
-                                  <Textarea
-                                    id={`testimonial-quote-${testimonial.id}`}
-                                    value={testimonial.quote}
-                                    onChange={(e) => updateTestimonial(testimonial.id, "quote", e.target.value)}
-                                    className="min-h-[100px]"
-                                  />
-                                </div>
-
-                                <div className="grid grid-cols-2 gap-4">
-                                  <div className="space-y-2">
-                                    <Label htmlFor={`testimonial-name-${testimonial.id}`}>Nome</Label>
-                                    <Input
-                                      id={`testimonial-name-${testimonial.id}`}
-                                      value={testimonial.name}
-                                      onChange={(e) => updateTestimonial(testimonial.id, "name", e.target.value)}
-                                    />
-                                  </div>
-
-                                  <div className="space-y-2">
-                                    <Label htmlFor={`testimonial-role-${testimonial.id}`}>Função</Label>
-                                    <Input
-                                      id={`testimonial-role-${testimonial.id}`}
-                                      value={testimonial.role}
-                                      onChange={(e) => updateTestimonial(testimonial.id, "role", e.target.value)}
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                            </CardContent>
-                          </Card>
-                        ))}
-                      </div>
-                    </div>
-                  </TabsContent>
-
-                  <TabsContent value="gallery">
-                    <div className="space-y-6">
-                      <div className="flex justify-between items-center">
-                        <h3 className="text-lg font-medium">Galeria de Fotos</h3>
-                        <Button variant="outline" size="sm" onClick={addGalleryImage}>
-                          <Plus className="h-4 w-4 mr-2" />
-                          Adicionar Imagem
-                        </Button>
-                      </div>
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {cardData.gallery.map((item) => (
-                          <div key={item.id} className="border rounded-lg p-4 space-y-3">
+                    <div className="grid grid-cols-1 gap-6">
+                      {cardData.features.map((feature) => (
+                        <Card key={feature.id} className="overflow-hidden">
+                          <CardHeader className="pb-2">
                             <div className="flex justify-between items-start">
-                              <h4 className="font-medium">Imagem {item.id}</h4>
+                              <div className="flex items-center">
+                                <div
+                                  className={`w-10 h-10 rounded-lg ${feature.color} flex items-center justify-center mr-3`}
+                                >
+                                  <span className="text-xl">{feature.icon}</span>
+                                </div>
+                                <CardTitle className="text-lg">{feature.title}</CardTitle>
+                              </div>
                               <Button
                                 variant="ghost"
                                 size="icon"
                                 className="text-red-500 hover:text-red-700 hover:bg-red-50 h-8 w-8"
-                                onClick={() => removeGalleryImage(item.id)}
+                                onClick={() => removeFeature(feature.id)}
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </CardHeader>
+                          <CardContent className="space-y-4">
+                            <div className="space-y-2">
+                              <Label htmlFor={`feature-title-${feature.id}`}>Título</Label>
+                              <Input
+                                id={`feature-title-${feature.id}`}
+                                value={feature.title}
+                                onChange={(e) => updateFeature(feature.id, "title", e.target.value)}
+                              />
+                            </div>
+
+                            <div className="space-y-2">
+                              <Label htmlFor={`feature-desc-${feature.id}`}>Descrição</Label>
+                              <Textarea
+                                id={`feature-desc-${feature.id}`}
+                                value={feature.description}
+                                onChange={(e) => updateFeature(feature.id, "description", e.target.value)}
+                              />
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4">
+                              <div className="space-y-2">
+                                <Label htmlFor={`feature-icon-${feature.id}`}>Ícone</Label>
+                                <Select
+                                  value={feature.icon}
+                                    onValueChange={(value: string) => updateFeature(feature.id, "icon", value)}
+                                >
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="Selecione um ícone" />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    <SelectItem value="📸">📸 Câmera</SelectItem>
+                                    <SelectItem value="🗓️">🗓️ Calendário</SelectItem>
+                                    <SelectItem value="👗">👗 Vestido</SelectItem>
+                                    <SelectItem value="👯‍♀️">👯‍♀️ Madrinhas</SelectItem>
+                                    <SelectItem value="💎">💎 Diamante</SelectItem>
+                                    <SelectItem value="🔗">🔗 Link</SelectItem>
+                                    <SelectItem value="🎉">🎉 Festa</SelectItem>
+                                    <SelectItem value="💃">💃 Dança</SelectItem>
+                                    <SelectItem value="🥂">🥂 Brinde</SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </div>
+
+                              <div className="space-y-2">
+                                <Label htmlFor={`feature-color-${feature.id}`}>Cor de Fundo</Label>
+                                <Select
+                                  value={feature.color}
+                                    onValueChange={(value: string) => updateFeature(feature.id, "color", value)}
+                                >
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="Selecione uma cor" />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    <SelectItem value="bg-pink-100">Rosa</SelectItem>
+                                    <SelectItem value="bg-purple-100">Roxo</SelectItem>
+                                    <SelectItem value="bg-blue-100">Azul</SelectItem>
+                                    <SelectItem value="bg-green-100">Verde</SelectItem>
+                                    <SelectItem value="bg-yellow-100">Amarelo</SelectItem>
+                                    <SelectItem value="bg-red-100">Vermelho</SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                            </div>
+
+                            <div className="space-y-2">
+                              <Label htmlFor={`feature-image-${feature.id}`}>Imagem (opcional)</Label>
+                              <div className="border-2 border-dashed border-gray-200 rounded-lg p-4 text-center">
+                                {feature.image ? (
+                                  <div className="relative">
+                                    <div className="h-32 bg-pink-200 rounded-lg flex items-center justify-center">
+                                      <ImageIcon className="h-8 w-8 text-pink-500" />
+                                    </div>
+                                    <Button
+                                      variant="destructive"
+                                      size="icon"
+                                      className="absolute top-2 right-2 h-6 w-6"
+                                      onClick={() => updateFeature(feature.id, "image", null)}
+                                    >
+                                      <X className="h-3 w-3" />
+                                    </Button>
+                                  </div>
+                                ) : (
+                                  <>
+                                    <ImageIcon className="h-8 w-8 mx-auto text-gray-400 mb-2" />
+                                    <p className="text-xs text-gray-500 mb-2">Clique para selecionar</p>
+                                    <Button variant="outline" size="sm">
+                                      Selecionar
+                                    </Button>
+                                  </>
+                                )}
+                              </div>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  </div>
+                  </TabsContent>
+
+                  <TabsContent value="testimonials">
+                  <div className="space-y-6">
+                    <div className="flex justify-between items-center">
+                      <h3 className="text-lg font-medium">Depoimentos</h3>
+                      <Button variant="outline" size="sm" onClick={addTestimonial}>
+                        <Plus className="h-4 w-4 mr-2" />
+                        Adicionar Depoimento
+                      </Button>
+                    </div>
+
+                    <div className="grid grid-cols-1 gap-4">
+                      {cardData.testimonials.map((testimonial) => (
+                        <Card key={testimonial.id} className="overflow-hidden">
+                          <CardContent className="p-4">
+                            <div className="flex justify-between items-start mb-3">
+                              <div>
+                                <h4 className="font-medium">{testimonial.name}</h4>
+                                <p className="text-sm text-pink-600">{testimonial.role}</p>
+                              </div>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="text-red-500 hover:text-red-700 hover:bg-red-50 h-8 w-8"
+                                onClick={() => removeTestimonial(testimonial.id)}
                               >
                                 <Trash2 className="h-4 w-4" />
                               </Button>
                             </div>
 
-                            <div className="border-2 border-dashed border-gray-200 rounded-lg p-4 text-center">
-                              {item.image ? (
-                                <div className="relative">
-                                  <div className="h-32 bg-pink-200 rounded-lg flex items-center justify-center">
-                                    <ImageIcon className="h-8 w-8 text-pink-500" />
-                                  </div>
-                                  <Button
-                                    variant="destructive"
-                                    size="icon"
-                                    className="absolute top-2 right-2 h-6 w-6"
-                                    onClick={() => updateGalleryImage(item.id, "image", null)}
-                                  >
-                                    <X className="h-3 w-3" />
-                                  </Button>
-                                </div>
-                              ) : (
-                                <>
-                                  <ImageIcon className="h-8 w-8 mx-auto text-gray-400 mb-2" />
-                                  <p className="text-xs text-gray-500 mb-2">Clique para selecionar</p>
-                                  <Button variant="outline" size="sm">
-                                    Selecionar
-                                  </Button>
-                                </>
-                              )}
-                            </div>
+                            <div className="space-y-4">
+                              <div className="space-y-2">
+                                <Label htmlFor={`testimonial-quote-${testimonial.id}`}>Depoimento</Label>
+                                <Textarea
+                                  id={`testimonial-quote-${testimonial.id}`}
+                                  value={testimonial.quote}
+                                  onChange={(e) => updateTestimonial(testimonial.id, "quote", e.target.value)}
+                                  className="min-h-[100px]"
+                                />
+                              </div>
 
-                            <div className="space-y-2">
-                              <Label htmlFor={`gallery-desc-${item.id}`}>Descrição</Label>
-                              <Input
-                                id={`gallery-desc-${item.id}`}
-                                value={item.description}
-                                onChange={(e) => updateGalleryImage(item.id, "description", e.target.value)}
-                                placeholder="Descreva esta imagem"
-                              />
+                              <div className="grid grid-cols-2 gap-4">
+                                <div className="space-y-2">
+                                  <Label htmlFor={`testimonial-name-${testimonial.id}`}>Nome</Label>
+                                  <Input
+                                    id={`testimonial-name-${testimonial.id}`}
+                                    value={testimonial.name}
+                                    onChange={(e) => updateTestimonial(testimonial.id, "name", e.target.value)}
+                                  />
+                                </div>
+
+                                <div className="space-y-2">
+                                  <Label htmlFor={`testimonial-role-${testimonial.id}`}>Função</Label>
+                                  <Input
+                                    id={`testimonial-role-${testimonial.id}`}
+                                    value={testimonial.role}
+                                    onChange={(e) => updateTestimonial(testimonial.id, "role", e.target.value)}
+                                  />
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                        ))}
-                      </div>
+                          </CardContent>
+                        </Card>
+                      ))}
                     </div>
+                  </div>
+                  </TabsContent>
+
+                  <TabsContent value="gallery">
+                  <div className="space-y-6">
+                    <div className="flex justify-between items-center">
+                      <h3 className="text-lg font-medium">Galeria de Fotos</h3>
+                      <Button variant="outline" size="sm" onClick={addGalleryImage}>
+                        <Plus className="h-4 w-4 mr-2" />
+                        Adicionar Imagem
+                      </Button>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {cardData.gallery.map((item) => (
+                        <div key={item.id} className="border rounded-lg p-4 space-y-3">
+                          <div className="flex justify-between items-start">
+                            <h4 className="font-medium">Imagem {item.id}</h4>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="text-red-500 hover:text-red-700 hover:bg-red-50 h-8 w-8"
+                              onClick={() => removeGalleryImage(item.id)}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+
+                          <div className="border-2 border-dashed border-gray-200 rounded-lg p-4 text-center">
+                            {item.image ? (
+                              <div className="relative">
+                                <div className="h-32 bg-pink-200 rounded-lg flex items-center justify-center">
+                                  <ImageIcon className="h-8 w-8 text-pink-500" />
+                                </div>
+                                <Button
+                                  variant="destructive"
+                                  size="icon"
+                                  className="absolute top-2 right-2 h-6 w-6"
+                                  onClick={() => updateGalleryImage(item.id, "image", null)}
+                                >
+                                  <X className="h-3 w-3" />
+                                </Button>
+                              </div>
+                            ) : (
+                              <>
+                                <ImageIcon className="h-8 w-8 mx-auto text-gray-400 mb-2" />
+                                <p className="text-xs text-gray-500 mb-2">Clique para selecionar</p>
+                                <Button variant="outline" size="sm">
+                                  Selecionar
+                                </Button>
+                              </>
+                            )}
+                          </div>
+
+                          <div className="space-y-2">
+                            <Label htmlFor={`gallery-desc-${item.id}`}>Descrição</Label>
+                            <Input
+                              id={`gallery-desc-${item.id}`}
+                              value={item.description}
+                              onChange={(e) => updateGalleryImage(item.id, "description", e.target.value)}
+                              placeholder="Descreva esta imagem"
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                   </TabsContent>
 
                   <TabsContent value="photos">
-                    <div className="space-y-6">
-                      <div className="flex justify-between items-center">
+                  <div className="space-y-6">
+                    <div className="flex justify-between items-center">
                         <h3 className="text-lg font-medium">Fotos do Cartão</h3>
-                        <Button variant="outline" size="sm" onClick={addPhoto}>
-                          <Plus className="h-4 w-4 mr-2" />
-                          Adicionar Foto
-                        </Button>
-                      </div>
+                      <Button variant="outline" size="sm" onClick={addPhoto}>
+                        <Plus className="h-4 w-4 mr-2" />
+                        Adicionar Foto
+                      </Button>
+                    </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {cardData.photos.map((photo) => (
                           <Card key={photo.id} className="overflow-hidden">
                             <CardContent className="p-4">
                               <div className="flex justify-between items-start mb-3">
                                 <h4 className="font-medium">Foto {photo.id}</h4>
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  className="text-red-500 hover:text-red-700 hover:bg-red-50 h-8 w-8"
-                                  onClick={() => removePhoto(photo.id)}
-                                >
-                                  <Trash2 className="h-4 w-4" />
-                                </Button>
-                              </div>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="text-red-500 hover:text-red-700 hover:bg-red-50 h-8 w-8"
+                              onClick={() => removePhoto(photo.id)}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
 
                               <div className="space-y-4">
-                                <div className="border-2 border-dashed border-gray-200 rounded-lg p-4 text-center">
-                                  {photo.url ? (
-                                    <div className="relative">
-                                      <div className="h-32 bg-pink-200 rounded-lg flex items-center justify-center">
-                                        <ImageIcon className="h-8 w-8 text-pink-500" />
-                                      </div>
-                                      <Button
-                                        variant="destructive"
-                                        size="icon"
-                                        className="absolute top-2 right-2 h-6 w-6"
-                                        onClick={() => updatePhoto(photo.id, "url", null)}
-                                      >
-                                        <X className="h-3 w-3" />
-                                      </Button>
-                                    </div>
-                                  ) : (
-                                    <>
-                                      <ImageIcon className="h-8 w-8 mx-auto text-gray-400 mb-2" />
-                                      <p className="text-xs text-gray-500 mb-2">Clique para selecionar</p>
-                                      <Button variant="outline" size="sm">
-                                        Selecionar
-                                      </Button>
-                                    </>
-                                  )}
+                          <div className="border-2 border-dashed border-gray-200 rounded-lg p-4 text-center">
+                            {photo.url ? (
+                              <div className="relative">
+                                <div className="h-32 bg-pink-200 rounded-lg flex items-center justify-center">
+                                  <ImageIcon className="h-8 w-8 text-pink-500" />
                                 </div>
-
-                                <div className="space-y-2">
-                                  <Label htmlFor={`photo-desc-${photo.id}`}>Descrição</Label>
-                                  <Input
-                                    id={`photo-desc-${photo.id}`}
-                                    value={photo.description}
-                                    onChange={(e) => updatePhoto(photo.id, "description", e.target.value)}
-                                    placeholder="Descreva esta foto"
-                                  />
-                                </div>
+                                <Button
+                                  variant="destructive"
+                                  size="icon"
+                                  className="absolute top-2 right-2 h-6 w-6"
+                                  onClick={() => updatePhoto(photo.id, "url", null)}
+                                >
+                                  <X className="h-3 w-3" />
+                                </Button>
                               </div>
+                            ) : (
+                              <>
+                                <ImageIcon className="h-8 w-8 mx-auto text-gray-400 mb-2" />
+                                <p className="text-xs text-gray-500 mb-2">Clique para selecionar</p>
+                                <Button variant="outline" size="sm">
+                                  Selecionar
+                                </Button>
+                              </>
+                            )}
+                          </div>
+
+                          <div className="space-y-2">
+                            <Label htmlFor={`photo-desc-${photo.id}`}>Descrição</Label>
+                            <Input
+                              id={`photo-desc-${photo.id}`}
+                              value={photo.description}
+                              onChange={(e) => updatePhoto(photo.id, "description", e.target.value)}
+                              placeholder="Descreva esta foto"
+                            />
+                          </div>
+                        </div>
                             </CardContent>
                           </Card>
-                        ))}
-                      </div>
+                      ))}
                     </div>
+                  </div>
                   </TabsContent>
 
                   <TabsContent value="messages">
-                    <div className="space-y-6">
-                      <div className="flex justify-between items-center">
+                  <div className="space-y-6">
+                    <div className="flex justify-between items-center">
                         <h3 className="text-lg font-medium">Mensagens</h3>
-                      </div>
+                    </div>
 
-                      <div className="space-y-4">
-                        {cardData.messages.map((message) => (
+                    <div className="space-y-4">
+                      {cardData.messages.map((message) => (
                           <Card key={message.id} className="overflow-hidden">
                             <CardContent className="p-4">
                               <div className="flex justify-between items-start mb-3">
@@ -1310,15 +1310,15 @@ export default function EditCardPage({ params }: PageProps) {
                                   <h4 className="font-medium">{message.author}</h4>
                                   <p className="text-sm text-gray-500">{message.date}</p>
                                 </div>
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
+                          <Button
+                            variant="ghost"
+                            size="icon"
                                   className="text-red-500 hover:text-red-700 hover:bg-red-50 h-8 w-8"
-                                  onClick={() => removeMessage(message.id)}
-                                >
-                                  <Trash2 className="h-4 w-4" />
-                                </Button>
-                              </div>
+                            onClick={() => removeMessage(message.id)}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                            </div>
 
                               <p className="text-gray-700">{message.content}</p>
                             </CardContent>
@@ -1330,43 +1330,43 @@ export default function EditCardPage({ params }: PageProps) {
                             <NewMessageForm onSubmit={addMessage} />
                           </CardContent>
                         </Card>
-                      </div>
                     </div>
+                  </div>
                   </TabsContent>
 
                   <TabsContent value="itinerary">
-                    <div className="space-y-6">
-                      <div className="flex justify-between items-center">
+                  <div className="space-y-6">
+                    <div className="flex justify-between items-center">
                         <h3 className="text-lg font-medium">Roteiro</h3>
-                        <Button variant="outline" size="sm" onClick={addDay}>
-                          <Plus className="h-4 w-4 mr-2" />
-                          Adicionar Dia
-                        </Button>
-                      </div>
+                      <Button variant="outline" size="sm" onClick={addDay}>
+                        <Plus className="h-4 w-4 mr-2" />
+                        Adicionar Dia
+                      </Button>
+                    </div>
 
                       <div className="space-y-6">
-                        {cardData.itinerary.map((day, dayIndex) => (
+                      {cardData.itinerary.map((day, dayIndex) => (
                           <Card key={day.day} className="overflow-hidden">
                             <CardHeader className="pb-2">
                               <div className="flex justify-between items-center">
                                 <CardTitle className="text-lg">{day.day}</CardTitle>
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  className="text-red-500 hover:text-red-700 hover:bg-red-50 h-8 w-8"
+                                    <Button
+                                      variant="ghost"
+                                      size="icon"
+                                      className="text-red-500 hover:text-red-700 hover:bg-red-50 h-8 w-8"
                                   onClick={() => removeDay(day.day)}
-                                >
-                                  <Trash2 className="h-4 w-4" />
-                                </Button>
-                              </div>
+                                    >
+                                      <Trash2 className="h-4 w-4" />
+                                    </Button>
+                                  </div>
                             </CardHeader>
                             <CardContent>
                               <div className="space-y-4">
                                 {day.events.map((event) => (
                                   <div key={event.id} className="flex items-start space-x-4">
                                     <div className="flex-1 grid grid-cols-2 gap-4">
-                                      <div className="space-y-2">
-                                        <Label htmlFor={`event-time-${event.id}`}>Horário</Label>
+                                    <div className="space-y-2">
+                                      <Label htmlFor={`event-time-${event.id}`}>Horário</Label>
                                         <Input
                                           id={`event-time-${event.id}`}
                                           value={event.time}
@@ -1374,22 +1374,22 @@ export default function EditCardPage({ params }: PageProps) {
                                         />
                                       </div>
                                       <div className="space-y-2">
-                                        <Label htmlFor={`event-activity-${event.id}`}>Atividade</Label>
-                                        <Input
-                                          id={`event-activity-${event.id}`}
-                                          value={event.activity}
-                                          onChange={(e) => updateEvent(dayIndex, event.id, "activity", e.target.value)}
-                                        />
-                                      </div>
-                                      <div className="space-y-2 col-span-2">
-                                        <Label htmlFor={`event-location-${event.id}`}>Local</Label>
-                                        <Input
-                                          id={`event-location-${event.id}`}
-                                          value={event.location}
-                                          onChange={(e) => updateEvent(dayIndex, event.id, "location", e.target.value)}
-                                        />
-                                      </div>
+                                      <Label htmlFor={`event-activity-${event.id}`}>Atividade</Label>
+                                      <Input
+                                        id={`event-activity-${event.id}`}
+                                        value={event.activity}
+                                        onChange={(e) => updateEvent(dayIndex, event.id, "activity", e.target.value)}
+                                      />
                                     </div>
+                                      <div className="space-y-2 col-span-2">
+                                    <Label htmlFor={`event-location-${event.id}`}>Local</Label>
+                                      <Input
+                                        id={`event-location-${event.id}`}
+                                        value={event.location}
+                                        onChange={(e) => updateEvent(dayIndex, event.id, "location", e.target.value)}
+                                      />
+                                    </div>
+                                  </div>
                                     <Button
                                       variant="ghost"
                                       size="icon"
@@ -1398,22 +1398,22 @@ export default function EditCardPage({ params }: PageProps) {
                                     >
                                       <Trash2 className="h-4 w-4" />
                                     </Button>
-                                  </div>
-                                ))}
-                                <Button
+                                </div>
+                              ))}
+                                  <Button
                                   variant="outline"
-                                  size="sm"
+                                    size="sm"
                                   className="w-full"
-                                  onClick={() => addEvent(day.day)}
-                                >
-                                  <Plus className="h-4 w-4 mr-2" />
-                                  Adicionar Evento
-                                </Button>
-                              </div>
+                                    onClick={() => addEvent(day.day)}
+                                  >
+                                    <Plus className="h-4 w-4 mr-2" />
+                                    Adicionar Evento
+                                  </Button>
+                                </div>
                             </CardContent>
                           </Card>
                         ))}
-                      </div>
+                  </div>
                     </div>
                   </TabsContent>
 
@@ -1456,146 +1456,146 @@ export default function EditCardPage({ params }: PageProps) {
                   </TabsContent>
 
                   <TabsContent value="music">
-                    <div className="space-y-6">
-                      <div className="space-y-2">
-                        <Label htmlFor="music">Música de Fundo</Label>
-                        <div className="relative">
-                          <Music className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                          <Input
-                            id="music"
-                            value={cardData.music}
-                            onChange={(e) => updateBasicInfo("music", e.target.value)}
-                            className="pl-10"
-                            placeholder="Ex: Dancing Queen - ABBA"
-                          />
-                        </div>
-                        <p className="text-xs text-gray-500">A música será tocada durante a apresentação do cartão</p>
+                  <div className="space-y-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="music">Música de Fundo</Label>
+                      <div className="relative">
+                        <Music className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                        <Input
+                          id="music"
+                          value={cardData.music}
+                          onChange={(e) => updateBasicInfo("music", e.target.value)}
+                          className="pl-10"
+                          placeholder="Ex: Dancing Queen - ABBA"
+                        />
                       </div>
-
-                      <div className="space-y-2 mt-6">
-                        <h3 className="font-medium text-gray-700">Músicas populares para despedida</h3>
-
-                        {[
-                          "Girls Just Want to Have Fun - Cyndi Lauper",
-                          "Single Ladies - Beyoncé",
-                          "Wannabe - Spice Girls",
-                          "Dancing Queen - ABBA",
-                        ].map((song, index) => (
-                          <div key={index} className="flex items-center justify-between p-3 bg-pink-50 rounded-lg">
-                            <div className="flex items-center">
-                              <Music className="h-5 w-5 text-pink-500 mr-3" />
-                              <span>{song}</span>
-                            </div>
-                            <Button variant="ghost" size="sm" onClick={() => updateBasicInfo("music", song)}>
-                              Selecionar
-                            </Button>
-                          </div>
-                        ))}
-                      </div>
+                      <p className="text-xs text-gray-500">A música será tocada durante a apresentação do cartão</p>
                     </div>
+
+                    <div className="space-y-2 mt-6">
+                      <h3 className="font-medium text-gray-700">Músicas populares para despedida</h3>
+
+                      {[
+                        "Girls Just Want to Have Fun - Cyndi Lauper",
+                        "Single Ladies - Beyoncé",
+                        "Wannabe - Spice Girls",
+                        "Dancing Queen - ABBA",
+                      ].map((song, index) => (
+                        <div key={index} className="flex items-center justify-between p-3 bg-pink-50 rounded-lg">
+                          <div className="flex items-center">
+                            <Music className="h-5 w-5 text-pink-500 mr-3" />
+                            <span>{song}</span>
+                          </div>
+                          <Button variant="ghost" size="sm" onClick={() => updateBasicInfo("music", song)}>
+                            Selecionar
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                   </TabsContent>
 
                   <TabsContent value="share">
-                    <div className="space-y-6">
-                      <div className="space-y-4">
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <h3 className="font-medium">Visibilidade</h3>
-                            <p className="text-sm text-gray-500">Defina quem pode ver este cartão</p>
-                          </div>
-                          <Switch
-                            checked={!cardData.shareOptions.isPrivate}
+                  <div className="space-y-6">
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <h3 className="font-medium">Visibilidade</h3>
+                          <p className="text-sm text-gray-500">Defina quem pode ver este cartão</p>
+                        </div>
+                        <Switch
+                          checked={!cardData.shareOptions.isPrivate}
                             onCheckedChange={(checked: boolean) => updateShareOptions("isPrivate", checked)}
-                          />
-                        </div>
-
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <h3 className="font-medium">Permitir Comentários</h3>
-                            <p className="text-sm text-gray-500">Permitir que as pessoas deixem mensagens</p>
-                          </div>
-                          <Switch
-                            checked={cardData.shareOptions.allowComments}
-                            onCheckedChange={(checked: boolean) => updateShareOptions("allowComments", checked)}
-                          />
-                        </div>
-
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <h3 className="font-medium">Proteger com Senha</h3>
-                            <p className="text-sm text-gray-500">Exigir senha para visualizar</p>
-                          </div>
-                          <Switch
-                            checked={cardData.shareOptions.requirePassword}
-                            onCheckedChange={(checked: boolean) => updateShareOptions("requirePassword", checked)}
-                          />
-                        </div>
-
-                        {cardData.shareOptions.requirePassword && (
-                          <div className="space-y-2">
-                            <Label htmlFor="password">Senha</Label>
-                            <Input
-                              id="password"
-                              type="password"
-                              value={cardData.shareOptions.password}
-                              onChange={(e) => updateShareOptions("password", e.target.value)}
-                              placeholder="Digite uma senha"
-                            />
-                          </div>
-                        )}
-
-                        <div className="space-y-2">
-                          <Label htmlFor="expiration">Data de Expiração (opcional)</Label>
-                          <Input
-                            id="expiration"
-                            type="date"
-                            value={cardData.shareOptions.expirationDate}
-                            onChange={(e) => updateShareOptions("expirationDate", e.target.value)}
-                          />
-                          <p className="text-xs text-gray-500">O cartão não poderá ser acessado após esta data</p>
-                        </div>
+                        />
                       </div>
 
-                      <Separator />
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <h3 className="font-medium">Permitir Comentários</h3>
+                          <p className="text-sm text-gray-500">Permitir que as pessoas deixem mensagens</p>
+                        </div>
+                        <Switch
+                          checked={cardData.shareOptions.allowComments}
+                            onCheckedChange={(checked: boolean) => updateShareOptions("allowComments", checked)}
+                        />
+                      </div>
 
-                      <div className="space-y-4">
-                        <h3 className="font-medium">Link para Compartilhar</h3>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <h3 className="font-medium">Proteger com Senha</h3>
+                          <p className="text-sm text-gray-500">Exigir senha para visualizar</p>
+                        </div>
+                        <Switch
+                          checked={cardData.shareOptions.requirePassword}
+                            onCheckedChange={(checked: boolean) => updateShareOptions("requirePassword", checked)}
+                        />
+                      </div>
 
-                        <div className="flex items-center space-x-4">
+                      {cardData.shareOptions.requirePassword && (
+                        <div className="space-y-2">
+                          <Label htmlFor="password">Senha</Label>
                           <Input
-                            readOnly
-                            value={`https://bridesquad.com/preview/${id}`}
-                            className="bg-gray-50"
+                            id="password"
+                            type="password"
+                            value={cardData.shareOptions.password}
+                            onChange={(e) => updateShareOptions("password", e.target.value)}
+                            placeholder="Digite uma senha"
                           />
-                          <Button variant="outline" className="rounded-l-none">
-                            <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                              <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
-                            </svg>
-                          </Button>
                         </div>
+                      )}
 
-                        <div className="flex space-x-2">
-                          <Button variant="outline" className="flex-1">
-                            <svg className="h-4 w-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                              <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12s5.37 12 12 12 12-5.37 12-12c0-3.55-1.55-6.91-4.24-9.21l1.41-1.41L18.76.88 17.35 2.3zM12 22c-5.52 0-10-4.48-10-10S6.48 2 12 2s10 4.48 10 10zm-1-17.93c-3.94.49-7 3.85-7 7.93s3.05 7.44 7 7.93V18h-2v-2h2v-2.68c0-1.15.37-2.04 1.08-2.65.71-.61 1.67-.92 2.87-.92.39 0 .8.03 1.22.08.43.05.79.12 1.08.2v2.1c-.32-.12-.59-.2-.81-.24-.22-.04-.45-.06-.69-.06-.61 0-1.06.16-1.36.47-.3.31-.44.75-.44 1.32V14h3l-.44 2h-2.56v4.93z" />
-                            </svg>
-                            Facebook
-                          </Button>
-                          <Button variant="outline" className="flex-1">
-                            <svg className="h-4 w-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                              <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" />
-                            </svg>
-                            Twitter
-                          </Button>
-                          <Button variant="outline" className="flex-1">
-                            <svg className="h-4 w-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                              <path d="M21.11 2.89A12.91 12.91 0 0 0 12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12c0-3.55-1.55-6.91-4.24-9.21l1.41-1.41L18.76.88 17.35 2.3zM12 22c-5.52 0-10-4.48-10-10S6.48 2 12 2s10 4.48 10 10zm-1-17.93c-3.94.49-7 3.85-7 7.93s3.05 7.44 7 7.93V18h-2v-2h2v-2.68c0-1.15.37-2.04 1.08-2.65.71-.61 1.67-.92 2.87-.92.39 0 .8.03 1.22.08.43.05.79.12 1.08.2v2.1c-.32-.12-.59-.2-.81-.24-.22-.04-.45-.06-.69-.06-.61 0-1.06.16-1.36.47-.3.31-.44.75-.44 1.32V14h3l-.44 2h-2.56v4.93z" />
-                            </svg>
-                            WhatsApp
-                          </Button>
-                        </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="expiration">Data de Expiração (opcional)</Label>
+                        <Input
+                          id="expiration"
+                          type="date"
+                          value={cardData.shareOptions.expirationDate}
+                          onChange={(e) => updateShareOptions("expirationDate", e.target.value)}
+                        />
+                        <p className="text-xs text-gray-500">O cartão não poderá ser acessado após esta data</p>
                       </div>
                     </div>
+
+                    <Separator />
+
+                    <div className="space-y-4">
+                      <h3 className="font-medium">Link para Compartilhar</h3>
+
+                        <div className="flex items-center space-x-4">
+                        <Input
+                          readOnly
+                            value={`https://bridesquad.com/preview/${id}`}
+                            className="bg-gray-50"
+                        />
+                        <Button variant="outline" className="rounded-l-none">
+                            <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
+                          </svg>
+                        </Button>
+                      </div>
+
+                      <div className="flex space-x-2">
+                        <Button variant="outline" className="flex-1">
+                          <svg className="h-4 w-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12s5.37 12 12 12 12-5.37 12-12c0-3.55-1.55-6.91-4.24-9.21l1.41-1.41L18.76.88 17.35 2.3zM12 22c-5.52 0-10-4.48-10-10S6.48 2 12 2s10 4.48 10 10zm-1-17.93c-3.94.49-7 3.85-7 7.93s3.05 7.44 7 7.93V18h-2v-2h2v-2.68c0-1.15.37-2.04 1.08-2.65.71-.61 1.67-.92 2.87-.92.39 0 .8.03 1.22.08.43.05.79.12 1.08.2v2.1c-.32-.12-.59-.2-.81-.24-.22-.04-.45-.06-.69-.06-.61 0-1.06.16-1.36.47-.3.31-.44.75-.44 1.32V14h3l-.44 2h-2.56v4.93z" />
+                          </svg>
+                          Facebook
+                        </Button>
+                        <Button variant="outline" className="flex-1">
+                          <svg className="h-4 w-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" />
+                          </svg>
+                          Twitter
+                        </Button>
+                        <Button variant="outline" className="flex-1">
+                          <svg className="h-4 w-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M21.11 2.89A12.91 12.91 0 0 0 12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12c0-3.55-1.55-6.91-4.24-9.21l1.41-1.41L18.76.88 17.35 2.3zM12 22c-5.52 0-10-4.48-10-10S6.48 2 12 2s10 4.48 10 10zm-1-17.93c-3.94.49-7 3.85-7 7.93s3.05 7.44 7 7.93V18h-2v-2h2v-2.68c0-1.15.37-2.04 1.08-2.65.71-.61 1.67-.92 2.87-.92.39 0 .8.03 1.22.08.43.05.79.12 1.08.2v2.1c-.32-.12-.59-.2-.81-.24-.22-.04-.45-.06-.69-.06-.61 0-1.06.16-1.36.47-.3.31-.44.75-.44 1.32V14h3l-.44 2h-2.56v4.93z" />
+                          </svg>
+                          WhatsApp
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
                   </TabsContent>
 
                   <TabsContent value="bridesmaids">
