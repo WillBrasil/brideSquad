@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { UserPlus, Mic, Gift, Camera, Sparkles, Edit } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -11,24 +10,28 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Badge } from "@/components/ui/badge"
 
-export default function BridesmaidRoles() {
-  const [bridesmaids, setBridesmaids] = useState([
-    {
-      id: 1,
-      name: "Mariana Silva",
-      role: "Madrinha da Zueira",
-      message: "Vamos fazer dessa despedida a melhor de todas!",
-      avatar: "/placeholder.svg?height=100&width=100",
-    },
-    {
-      id: 2,
-      name: "Juliana Costa",
-      role: "Madrinha das Fotos",
-      message: "Pronta para registrar todos os momentos!",
-      avatar: "/placeholder.svg?height=100&width=100",
-    },
-  ])
+interface Bridesmaid {
+  id: number
+  name: string
+  role: string
+  message: string
+  avatar: string
+}
+
+interface BridesmaidRolesProps {
+  bridesmaids: Bridesmaid[]
+  onUpdate: (bridesmaids: Bridesmaid[]) => void
+}
+
+export default function BridesmaidRoles({ bridesmaids, onUpdate }: BridesmaidRolesProps) {
+  const [newBridesmaid, setNewBridesmaid] = useState({
+    name: "",
+    role: "",
+    message: "",
+    avatar: "",
+  })
 
   const roles = [
     { id: "zueira", name: "Madrinha da Zueira", icon: <Sparkles className="h-5 w-5" /> },
@@ -36,6 +39,32 @@ export default function BridesmaidRoles() {
     { id: "presentes", name: "Madrinha dos Presentes", icon: <Gift className="h-5 w-5" /> },
     { id: "musica", name: "Madrinha da Música", icon: <Mic className="h-5 w-5" /> },
   ]
+
+  const handleAddBridesmaid = () => {
+    if (!newBridesmaid.name || !newBridesmaid.role) return
+
+    const newId = Math.max(0, ...bridesmaids.map((b) => b.id)) + 1
+    const newBridesmaidData = {
+      id: newId,
+      name: newBridesmaid.name,
+      role: newBridesmaid.role,
+      message: newBridesmaid.message,
+      avatar: newBridesmaid.avatar || "/placeholder.svg?height=100&width=100",
+    }
+
+    onUpdate([...bridesmaids, newBridesmaidData])
+    setNewBridesmaid({ name: "", role: "", message: "", avatar: "" })
+  }
+
+  const handleRemoveBridesmaid = (id: number) => {
+    onUpdate(bridesmaids.filter((b) => b.id !== id))
+  }
+
+  const handleUpdateBridesmaid = (id: number, field: keyof Bridesmaid, value: string) => {
+    onUpdate(
+      bridesmaids.map((b) => (b.id === id ? { ...b, [field]: value } : b))
+    )
+  }
 
   return (
     <div>
@@ -56,12 +85,20 @@ export default function BridesmaidRoles() {
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="name">Nome da Madrinha</Label>
-                <Input id="name" placeholder="Digite o nome completo" />
+                <Input 
+                  id="name" 
+                  placeholder="Digite o nome completo"
+                  value={newBridesmaid.name}
+                  onChange={(e) => setNewBridesmaid({ ...newBridesmaid, name: e.target.value })}
+                />
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="role">Função</Label>
-                <Select>
+                <Select
+                  value={newBridesmaid.role}
+                  onValueChange={(value) => setNewBridesmaid({ ...newBridesmaid, role: value })}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione uma função" />
                   </SelectTrigger>
@@ -80,7 +117,13 @@ export default function BridesmaidRoles() {
 
               <div className="space-y-2">
                 <Label htmlFor="message">Recado para a Noiva</Label>
-                <Textarea id="message" placeholder="Escreva um recado especial..." className="min-h-[100px]" />
+                <Textarea 
+                  id="message" 
+                  placeholder="Escreva um recado especial..." 
+                  className="min-h-[100px]"
+                  value={newBridesmaid.message}
+                  onChange={(e) => setNewBridesmaid({ ...newBridesmaid, message: e.target.value })}
+                />
               </div>
 
               <div className="space-y-2">
@@ -95,7 +138,11 @@ export default function BridesmaidRoles() {
               </div>
             </CardContent>
             <CardFooter>
-              <Button className="w-full bg-pink-600 hover:bg-pink-700">
+              <Button 
+                className="w-full bg-pink-600 hover:bg-pink-700"
+                onClick={handleAddBridesmaid}
+                disabled={!newBridesmaid.name || !newBridesmaid.role}
+              >
                 <UserPlus className="h-4 w-4 mr-2" />
                 Adicionar Madrinha
               </Button>
@@ -135,9 +182,13 @@ export default function BridesmaidRoles() {
                           <Mic className="h-4 w-4 mr-2" />
                           Gravar Áudio
                         </Button>
-                        <Button variant="ghost" size="sm">
+                        <Button 
+                          variant="ghost" 
+                          size="sm"
+                          onClick={() => handleRemoveBridesmaid(bridesmaid.id)}
+                        >
                           <Edit className="h-4 w-4 mr-2" />
-                          Editar
+                          Remover
                         </Button>
                       </div>
                     </div>
@@ -145,23 +196,10 @@ export default function BridesmaidRoles() {
                 ))}
               </div>
             </CardContent>
-            <CardFooter className="flex justify-between">
-              <Button variant="outline">Exportar Lista</Button>
-              <Button className="bg-pink-600 hover:bg-pink-700">Enviar para a Noiva</Button>
-            </CardFooter>
           </Card>
         </div>
       </div>
     </div>
-  )
-}
-
-// Badge component since it's not imported from shadcn/ui
-function Badge({ children, className }: { children: React.ReactNode; className?: string }) {
-  return (
-    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${className}`}>
-      {children}
-    </span>
   )
 }
 

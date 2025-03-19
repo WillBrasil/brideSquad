@@ -1,9 +1,37 @@
+"use client"
+
 import BridesmaidRoles from "@/components/bridesmaid-roles"
 import Link from "next/link"
 import { ChevronLeft, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useState } from "react"
+
+interface Bridesmaid {
+  id: number
+  name: string
+  role: string
+  message: string
+  avatar: string
+}
 
 export default function RolesPage() {
+  const [bridesmaids, setBridesmaids] = useState<Bridesmaid[]>([
+    {
+      id: 1,
+      name: "Mariana Silva",
+      role: "Madrinha da Zueira",
+      message: "Vou fazer essa despedida ser a melhor de todas!",
+      avatar: "/placeholder.svg?height=100&width=100"
+    },
+    {
+      id: 2,
+      name: "Juliana Costa",
+      role: "Madrinha das Fotos",
+      message: "Pronta para capturar todos os momentos especiais!",
+      avatar: "/placeholder.svg?height=100&width=100"
+    }
+  ])
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-pink-50">
       <header className="bg-white shadow-sm py-4">
@@ -61,7 +89,7 @@ export default function RolesPage() {
       </div>
 
       <div className="container mx-auto px-4 pb-12">
-        <BridesmaidRoles />
+        <BridesmaidRoles bridesmaids={bridesmaids} onUpdate={setBridesmaids} />
       </div>
     </div>
   )

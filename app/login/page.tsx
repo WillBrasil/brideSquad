@@ -34,16 +34,25 @@ export default function LoginPage() {
     setIsLoading(true)
 
     try {
+      console.log("Iniciando login...")
       // Simulação de login - em produção, isso seria uma chamada real à API
       await new Promise((resolve) => setTimeout(resolve, 1500))
 
-      // Usando o estado hasPaidPlan para simular o status do plano
-      if (hasPaidPlan) {
-        router.push("/dashboard") // Redireciona para o painel completo
-      } else {
-        router.push("/preview-only") // Redireciona para a página de exemplo
+      console.log("Login bem sucedido, verificando plano...")
+      // Verifica se o usuário tem plano pago
+      const targetPath = hasPaidPlan ? "/dashboard" : "/preview-only"
+      console.log(`Redirecionando para: ${targetPath}`)
+      
+      // Tenta primeiro com router.push
+      try {
+        await router.push(targetPath)
+      } catch (navigationError) {
+        console.error("Erro na navegação com router.push:", navigationError)
+        // Se falhar, tenta com window.location
+        window.location.href = targetPath
       }
     } catch (err) {
+      console.error("Erro detalhado no login:", err)
       setError("Falha no login. Verifique suas credenciais.")
     } finally {
       setIsLoading(false)
