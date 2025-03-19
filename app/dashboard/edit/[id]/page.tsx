@@ -592,73 +592,91 @@ export default function EditCardPage({ params }: PageProps) {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Header */}
-      <header className="bg-white shadow-sm py-3 border-b sticky top-0 z-10">
-        <div className="container mx-auto px-4 flex justify-between items-center">
-          <div className="flex items-center">
-            <Link href="/dashboard">
-              <Button variant="ghost" size="sm" className="mr-2">
-                <ChevronLeft className="h-4 w-4 mr-1" />
-                Voltar
-              </Button>
-            </Link>
-            <div className="hidden sm:block">
-              <h1 className="text-lg font-semibold text-gray-800">Editando: {cardData.title}</h1>
-            </div>
-          </div>
-
-          <div className="flex items-center space-x-2">
-            <Button variant="outline" size="sm" onClick={handlePreview}>
-              <Eye className="h-4 w-4 mr-2" />
-              Visualizar
-            </Button>
-
-            <Button className="bg-pink-600 hover:bg-pink-700" size="sm" onClick={handleSave} disabled={isSaving}>
-              {isSaving ? (
-                <>Salvando...</>
-              ) : (
-                <>
-                  <Save className="h-4 w-4 mr-2" />
-                  Salvar
-                </>
-              )}
-            </Button>
-
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm">
-                  <Avatar className="h-8 w-8">
-                    <AvatarFallback className="bg-pink-200 text-pink-700">MS</AvatarFallback>
-                  </Avatar>
+      <header className="bg-white shadow-sm py-4 border-b sticky top-0 z-10">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div className="flex items-center w-full sm:w-auto">
+              <Link href="/dashboard">
+                <Button variant="ghost" size="sm" className="mr-2 hover:bg-pink-50">
+                  <ChevronLeft className="h-4 w-4 mr-1" />
+                  Voltar
                 </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <User className="mr-2 h-4 w-4" />
-                  <span>Perfil</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Sparkles className="mr-2 h-4 w-4" />
-                  <span>Meus Cartões</span>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <LogOut className="mr-2 h-4 w-4" />
-                  <span>Sair</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+              </Link>
+              <div className="flex-1 sm:flex-none">
+                <h1 className="text-xl font-semibold text-gray-800">Editando: {cardData.title}</h1>
+              </div>
+            </div>
+
+            <div className="flex items-center space-x-2 w-full sm:w-auto justify-end">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={handlePreview}
+                className="hover:bg-pink-50 hover:text-pink-600"
+              >
+                <Eye className="h-4 w-4 mr-2" />
+                Visualizar
+              </Button>
+
+              <Button 
+                className="bg-pink-600 hover:bg-pink-700 text-white" 
+                size="sm" 
+                onClick={handleSave} 
+                disabled={isSaving}
+              >
+                {isSaving ? (
+                  <div className="flex items-center">
+                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Salvando...
+                  </div>
+                ) : (
+                  <>
+                    <Save className="h-4 w-4 mr-2" />
+                    Salvar
+                  </>
+                )}
+              </Button>
+
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="sm" className="hover:bg-pink-50">
+                    <Avatar className="h-8 w-8">
+                      <AvatarFallback className="bg-pink-200 text-pink-700">MS</AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuLabel className="font-semibold">Minha Conta</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem className="cursor-pointer hover:bg-pink-50">
+                    <User className="mr-2 h-4 w-4 text-pink-600" />
+                    <span>Perfil</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="cursor-pointer hover:bg-pink-50">
+                    <Sparkles className="mr-2 h-4 w-4 text-pink-600" />
+                    <span>Meus Cartões</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem className="cursor-pointer hover:bg-pink-50 text-red-600">
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Sair</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           </div>
         </div>
       </header>
 
       {/* Success Message */}
       {showSuccessMessage && (
-        <div className="fixed top-16 right-4 z-50 max-w-md">
-          <Alert className="bg-green-50 border-green-200 text-green-800">
+        <div className="fixed top-20 right-4 z-50 max-w-md animate-fade-in">
+          <Alert className="bg-green-50 border-green-200 text-green-800 shadow-lg">
             <AlertDescription className="flex items-center">
-              <svg className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="h-5 w-5 mr-2 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
               Alterações salvas com sucesso!
@@ -672,131 +690,73 @@ export default function EditCardPage({ params }: PageProps) {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Sidebar Navigation */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow-sm border p-4 sticky top-20">
-              {/* Atualizar a navegação para incluir as novas seções */}
-              <nav className="space-y-1">
-                <Button
-                  variant={activeTab === "basic" ? "default" : "ghost"}
-                  className={`w-full justify-start ${activeTab === "basic" ? "bg-pink-600 hover:bg-pink-700" : ""}`}
-                  onClick={() => setActiveTab("basic")}
-                >
-                  <Sparkles className="h-4 w-4 mr-2" />
-                  Informações Básicas
-                </Button>
-                <Button
-                  variant={activeTab === "hero" ? "default" : "ghost"}
-                  className={`w-full justify-start ${activeTab === "hero" ? "bg-pink-600 hover:bg-pink-700" : ""}`}
-                  onClick={() => setActiveTab("hero")}
-                >
-                  <Image className="h-4 w-4 mr-2" />
-                  Banner Principal
-                </Button>
-                <Button
-                  variant={activeTab === "features" ? "default" : "ghost"}
-                  className={`w-full justify-start ${activeTab === "features" ? "bg-pink-600 hover:bg-pink-700" : ""}`}
-                  onClick={() => setActiveTab("features")}
-                >
-                  <LayoutGrid className="h-4 w-4 mr-2" />
-                  Recursos
-                </Button>
-                <Button
-                  variant={activeTab === "testimonials" ? "default" : "ghost"}
-                  className={`w-full justify-start ${activeTab === "testimonials" ? "bg-pink-600 hover:bg-pink-700" : ""}`}
-                  onClick={() => setActiveTab("testimonials")}
-                >
-                  <Quote className="h-4 w-4 mr-2" />
-                  Depoimentos
-                </Button>
-                <Button
-                  variant={activeTab === "gallery" ? "default" : "ghost"}
-                  className={`w-full justify-start ${activeTab === "gallery" ? "bg-pink-600 hover:bg-pink-700" : ""}`}
-                  onClick={() => setActiveTab("gallery")}
-                >
-                  <ImageIcon className="h-4 w-4 mr-2" />
-                  Galeria
-                </Button>
-                <Button
-                  variant={activeTab === "cta" ? "default" : "ghost"}
-                  className={`w-full justify-start ${activeTab === "cta" ? "bg-pink-600 hover:bg-pink-700" : ""}`}
-                  onClick={() => setActiveTab("cta")}
-                >
-                  <Megaphone className="h-4 w-4 mr-2" />
-                  Chamada para Ação
-                </Button>
-                <Button
-                  variant={activeTab === "photos" ? "default" : "ghost"}
-                  className={`w-full justify-start ${activeTab === "photos" ? "bg-pink-600 hover:bg-pink-700" : ""}`}
-                  onClick={() => setActiveTab("photos")}
-                >
-                  <Camera className="h-4 w-4 mr-2" />
-                  Fotos do Cartão
-                </Button>
-                <Button
-                  variant={activeTab === "messages" ? "default" : "ghost"}
-                  className={`w-full justify-start ${activeTab === "messages" ? "bg-pink-600 hover:bg-pink-700" : ""}`}
-                  onClick={() => setActiveTab("messages")}
-                >
-                  <MessageSquare className="h-4 w-4 mr-2" />
-                  Mensagens
-                </Button>
-                <Button
-                  variant={activeTab === "itinerary" ? "default" : "ghost"}
-                  className={`w-full justify-start ${activeTab === "itinerary" ? "bg-pink-600 hover:bg-pink-700" : ""}`}
-                  onClick={() => setActiveTab("itinerary")}
-                >
-                  <Calendar className="h-4 w-4 mr-2" />
-                  Roteiro
-                </Button>
-                <Button
-                  variant={activeTab === "music" ? "default" : "ghost"}
-                  className={`w-full justify-start ${activeTab === "music" ? "bg-pink-600 hover:bg-pink-700" : ""}`}
-                  onClick={() => setActiveTab("music")}
-                >
-                  <Music className="h-4 w-4 mr-2" />
-                  Música
-                </Button>
-                <Button
-                  variant={activeTab === "share" ? "default" : "ghost"}
-                  className={`w-full justify-start ${activeTab === "share" ? "bg-pink-600 hover:bg-pink-700" : ""}`}
-                  onClick={() => setActiveTab("share")}
-                >
-                  <Share2 className="h-4 w-4 mr-2" />
-                  Compartilhamento
-                </Button>
-                <Button
-                  variant={activeTab === "bridesmaids" ? "default" : "ghost"}
-                  className={`w-full justify-start ${activeTab === "bridesmaids" ? "bg-pink-600 hover:bg-pink-700" : ""}`}
-                  onClick={() => setActiveTab("bridesmaids")}
-                >
-                  <LayoutGrid className="h-4 w-4 mr-2" />
-                  Madrinhas
-                </Button>
+            <div className="bg-white rounded-xl shadow-sm border p-6 sticky top-20">
+              <nav className="space-y-2">
+                {[
+                  { id: "basic", label: "Informações Básicas", icon: Sparkles },
+                  { id: "hero", label: "Banner Principal", icon: Image },
+                  { id: "features", label: "Recursos", icon: LayoutGrid },
+                  { id: "testimonials", label: "Depoimentos", icon: Quote },
+                  { id: "gallery", label: "Galeria", icon: ImageIcon },
+                  { id: "photos", label: "Fotos do Cartão", icon: Camera },
+                  { id: "messages", label: "Mensagens", icon: MessageSquare },
+                  { id: "itinerary", label: "Roteiro", icon: Calendar },
+                  { id: "cta", label: "Chamada para Ação", icon: Megaphone },
+                  { id: "music", label: "Música", icon: Music },
+                  { id: "share", label: "Compartilhamento", icon: Share2 },
+                  { id: "bridesmaids", label: "Madrinhas", icon: LayoutGrid },
+                ].map((item) => {
+                  const Icon = item.icon
+                  return (
+                    <Button
+                      key={item.id}
+                      variant={activeTab === item.id ? "default" : "ghost"}
+                      className={`w-full justify-start transition-colors ${
+                        activeTab === item.id 
+                          ? "bg-pink-600 hover:bg-pink-700 text-white" 
+                          : "hover:bg-pink-50 hover:text-pink-600"
+                      }`}
+                      onClick={() => setActiveTab(item.id)}
+                    >
+                      <Icon className="h-4 w-4 mr-2" />
+                      {item.label}
+                    </Button>
+                  )
+                })}
               </nav>
 
-              <Separator className="my-4" />
+              <Separator className="my-6" />
 
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium">Status:</span>
-                  <Badge className={cardData.status === "published" ? "bg-green-500" : "bg-gray-500"}>
+                  <span className="text-sm font-medium text-gray-700">Status:</span>
+                  <Badge 
+                    className={`${
+                      cardData.status === "published" 
+                        ? "bg-green-100 text-green-800 hover:bg-green-200" 
+                        : "bg-gray-100 text-gray-800 hover:bg-gray-200"
+                    }`}
+                  >
                     {cardData.status === "published" ? "Publicado" : "Rascunho"}
                   </Badge>
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium">Visibilidade:</span>
+                  <span className="text-sm font-medium text-gray-700">Visibilidade:</span>
                   <div className="flex items-center">
-                    <span className="text-sm mr-2">{cardData.shareOptions.isPrivate ? "Privado" : "Público"}</span>
+                    <span className="text-sm mr-2 text-gray-600">
+                      {cardData.shareOptions.isPrivate ? "Privado" : "Público"}
+                    </span>
                     <Switch
                       checked={!cardData.shareOptions.isPrivate}
-                      onCheckedChange={(checked: boolean) => updateShareOptions("isPrivate", !checked)}
+                      onCheckedChange={(checked: boolean) => updateShareOptions("isPrivate", checked)}
                     />
                   </div>
                 </div>
 
                 <Button
                   variant="outline"
-                  className="w-full text-pink-600 border-pink-200 hover:bg-pink-50"
+                  className="w-full text-pink-600 border-pink-200 hover:bg-pink-50 hover:text-pink-700 transition-colors"
                   onClick={handlePreview}
                 >
                   <Eye className="h-4 w-4 mr-2" />
@@ -808,9 +768,9 @@ export default function EditCardPage({ params }: PageProps) {
 
           {/* Main Editing Area */}
           <div className="lg:col-span-3">
-            <Card className="shadow-sm">
-              <CardHeader>
-                <CardTitle>
+            <Card className="shadow-sm border-0">
+              <CardHeader className="border-b">
+                <CardTitle className="text-xl font-semibold text-gray-800">
                   {activeTab === "basic"
                     ? "Informações Básicas"
                     : activeTab === "photos"
@@ -824,18 +784,31 @@ export default function EditCardPage({ params }: PageProps) {
                             : "Opções de Compartilhamento"}
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <Tabs value={activeTab} onValueChange={setActiveTab}>
-                  <TabsList className="w-full justify-start">
-                    <TabsTrigger value="basic">Básico</TabsTrigger>
-                    <TabsTrigger value="hero">Hero</TabsTrigger>
-                    <TabsTrigger value="features">Recursos</TabsTrigger>
-                    <TabsTrigger value="testimonials">Depoimentos</TabsTrigger>
-                    <TabsTrigger value="gallery">Galeria</TabsTrigger>
-                    <TabsTrigger value="cta">CTA</TabsTrigger>
-                    <TabsTrigger value="music">Música</TabsTrigger>
-                    <TabsTrigger value="share">Compartilhar</TabsTrigger>
-                    <TabsTrigger value="bridesmaids">Madrinhas</TabsTrigger>
+              <CardContent className="p-6">
+                <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+                  <TabsList className="w-full justify-start bg-gray-50 p-1 rounded-lg">
+                    {[
+                      { value: "basic", label: "Básico" },
+                      { value: "hero", label: "Hero" },
+                      { value: "features", label: "Recursos" },
+                      { value: "testimonials", label: "Depoimentos" },
+                      { value: "gallery", label: "Galeria" },
+                      { value: "photos", label: "Fotos" },
+                      { value: "messages", label: "Mensagens" },
+                      { value: "itinerary", label: "Roteiro" },
+                      { value: "cta", label: "CTA" },
+                      { value: "music", label: "Música" },
+                      { value: "share", label: "Compartilhar" },
+                      { value: "bridesmaids", label: "Madrinhas" },
+                    ].map((tab) => (
+                      <TabsTrigger
+                        key={tab.value}
+                        value={tab.value}
+                        className="data-[state=active]:bg-white data-[state=active]:text-pink-600 data-[state=active]:shadow-sm"
+                      >
+                        {tab.label}
+                      </TabsTrigger>
+                    ))}
                   </TabsList>
 
                   <TabsContent value="basic">
@@ -1247,6 +1220,198 @@ export default function EditCardPage({ params }: PageProps) {
                               />
                             </div>
                           </div>
+                        ))}
+                      </div>
+                    </div>
+                  </TabsContent>
+
+                  <TabsContent value="photos">
+                    <div className="space-y-6">
+                      <div className="flex justify-between items-center">
+                        <h3 className="text-lg font-medium">Fotos do Cartão</h3>
+                        <Button variant="outline" size="sm" onClick={addPhoto}>
+                          <Plus className="h-4 w-4 mr-2" />
+                          Adicionar Foto
+                        </Button>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {cardData.photos.map((photo) => (
+                          <Card key={photo.id} className="overflow-hidden">
+                            <CardContent className="p-4">
+                              <div className="flex justify-between items-start mb-3">
+                                <h4 className="font-medium">Foto {photo.id}</h4>
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="text-red-500 hover:text-red-700 hover:bg-red-50 h-8 w-8"
+                                  onClick={() => removePhoto(photo.id)}
+                                >
+                                  <Trash2 className="h-4 w-4" />
+                                </Button>
+                              </div>
+
+                              <div className="space-y-4">
+                                <div className="border-2 border-dashed border-gray-200 rounded-lg p-4 text-center">
+                                  {photo.url ? (
+                                    <div className="relative">
+                                      <div className="h-32 bg-pink-200 rounded-lg flex items-center justify-center">
+                                        <ImageIcon className="h-8 w-8 text-pink-500" />
+                                      </div>
+                                      <Button
+                                        variant="destructive"
+                                        size="icon"
+                                        className="absolute top-2 right-2 h-6 w-6"
+                                        onClick={() => updatePhoto(photo.id, "url", null)}
+                                      >
+                                        <X className="h-3 w-3" />
+                                      </Button>
+                                    </div>
+                                  ) : (
+                                    <>
+                                      <ImageIcon className="h-8 w-8 mx-auto text-gray-400 mb-2" />
+                                      <p className="text-xs text-gray-500 mb-2">Clique para selecionar</p>
+                                      <Button variant="outline" size="sm">
+                                        Selecionar
+                                      </Button>
+                                    </>
+                                  )}
+                                </div>
+
+                                <div className="space-y-2">
+                                  <Label htmlFor={`photo-desc-${photo.id}`}>Descrição</Label>
+                                  <Input
+                                    id={`photo-desc-${photo.id}`}
+                                    value={photo.description}
+                                    onChange={(e) => updatePhoto(photo.id, "description", e.target.value)}
+                                    placeholder="Descreva esta foto"
+                                  />
+                                </div>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        ))}
+                      </div>
+                    </div>
+                  </TabsContent>
+
+                  <TabsContent value="messages">
+                    <div className="space-y-6">
+                      <div className="flex justify-between items-center">
+                        <h3 className="text-lg font-medium">Mensagens</h3>
+                      </div>
+
+                      <div className="space-y-4">
+                        {cardData.messages.map((message) => (
+                          <Card key={message.id} className="overflow-hidden">
+                            <CardContent className="p-4">
+                              <div className="flex justify-between items-start mb-3">
+                                <div>
+                                  <h4 className="font-medium">{message.author}</h4>
+                                  <p className="text-sm text-gray-500">{message.date}</p>
+                                </div>
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="text-red-500 hover:text-red-700 hover:bg-red-50 h-8 w-8"
+                                  onClick={() => removeMessage(message.id)}
+                                >
+                                  <Trash2 className="h-4 w-4" />
+                                </Button>
+                              </div>
+
+                              <p className="text-gray-700">{message.content}</p>
+                            </CardContent>
+                          </Card>
+                        ))}
+
+                        <Card>
+                          <CardContent className="p-4">
+                            <NewMessageForm onSubmit={addMessage} />
+                          </CardContent>
+                        </Card>
+                      </div>
+                    </div>
+                  </TabsContent>
+
+                  <TabsContent value="itinerary">
+                    <div className="space-y-6">
+                      <div className="flex justify-between items-center">
+                        <h3 className="text-lg font-medium">Roteiro</h3>
+                        <Button variant="outline" size="sm" onClick={addDay}>
+                          <Plus className="h-4 w-4 mr-2" />
+                          Adicionar Dia
+                        </Button>
+                      </div>
+
+                      <div className="space-y-6">
+                        {cardData.itinerary.map((day, dayIndex) => (
+                          <Card key={day.day} className="overflow-hidden">
+                            <CardHeader className="pb-2">
+                              <div className="flex justify-between items-center">
+                                <CardTitle className="text-lg">{day.day}</CardTitle>
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="text-red-500 hover:text-red-700 hover:bg-red-50 h-8 w-8"
+                                  onClick={() => removeDay(day.day)}
+                                >
+                                  <Trash2 className="h-4 w-4" />
+                                </Button>
+                              </div>
+                            </CardHeader>
+                            <CardContent>
+                              <div className="space-y-4">
+                                {day.events.map((event) => (
+                                  <div key={event.id} className="flex items-start space-x-4">
+                                    <div className="flex-1 grid grid-cols-2 gap-4">
+                                      <div className="space-y-2">
+                                        <Label htmlFor={`event-time-${event.id}`}>Horário</Label>
+                                        <Input
+                                          id={`event-time-${event.id}`}
+                                          value={event.time}
+                                          onChange={(e) => updateEvent(dayIndex, event.id, "time", e.target.value)}
+                                        />
+                                      </div>
+                                      <div className="space-y-2">
+                                        <Label htmlFor={`event-activity-${event.id}`}>Atividade</Label>
+                                        <Input
+                                          id={`event-activity-${event.id}`}
+                                          value={event.activity}
+                                          onChange={(e) => updateEvent(dayIndex, event.id, "activity", e.target.value)}
+                                        />
+                                      </div>
+                                      <div className="space-y-2 col-span-2">
+                                        <Label htmlFor={`event-location-${event.id}`}>Local</Label>
+                                        <Input
+                                          id={`event-location-${event.id}`}
+                                          value={event.location}
+                                          onChange={(e) => updateEvent(dayIndex, event.id, "location", e.target.value)}
+                                        />
+                                      </div>
+                                    </div>
+                                    <Button
+                                      variant="ghost"
+                                      size="icon"
+                                      className="text-red-500 hover:text-red-700 hover:bg-red-50 h-8 w-8 mt-6"
+                                      onClick={() => removeEvent(dayIndex, event.id)}
+                                    >
+                                      <Trash2 className="h-4 w-4" />
+                                    </Button>
+                                  </div>
+                                ))}
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="w-full"
+                                  onClick={() => addEvent(day.day)}
+                                >
+                                  <Plus className="h-4 w-4 mr-2" />
+                                  Adicionar Evento
+                                </Button>
+                              </div>
+                            </CardContent>
+                          </Card>
                         ))}
                       </div>
                     </div>
