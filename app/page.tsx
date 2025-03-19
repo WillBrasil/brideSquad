@@ -5,56 +5,63 @@ import { Button } from "@/components/ui/button"
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 
+interface Feature {
+  title: string;
+  description: string;
+  image: string;
+  alt: string;
+  icon?: string;
+  href?: string;
+  color?: string;
+}
+
 export default function Home() {
-  const features = [
+  const features: Feature[] = [
     {
-      title: "Criador de Memórias",
-      description: "Crie cartões digitais com fotos, vídeos e mensagens personalizadas",
+      title: "Memórias Digitais",
+      description: "Crie e compartilhe memórias especiais da despedida",
+      image: "/images/features/feature-memories.jpg",
+      alt: "Amigas tirando fotos e criando memórias juntas",
       icon: "📸",
       href: "/memories",
-      color: "bg-pink-100",
-      image: "/images/feature-memories.jpg",
+      color: "bg-pink-100"
     },
     {
-      title: "Planejador de Roteiros",
-      description: "Organize o roteiro perfeito com sugestões personalizadas",
+      title: "Planejamento Simplificado",
+      description: "Organize todos os detalhes em um só lugar",
+      image: "/images/features/feature-planning.jpg",
+      alt: "Grupo de amigas planejando eventos",
       icon: "🗓️",
       href: "/planner",
-      color: "bg-purple-100",
-      image: "/placeholder.svg?height=200&width=300",
+      color: "bg-purple-100"
     },
     {
-      title: "Ideias de Looks",
-      description: "Encontre inspirações para looks, fantasias e acessórios",
+      title: "Looks Coordenados",
+      description: "Inspire-se com ideias de looks para o grupo",
+      image: "/images/features/feature-looks.jpg",
+      alt: "Grupo usando looks combinando para a festa",
       icon: "👗",
       href: "/looks",
-      color: "bg-blue-100",
-      image: "/placeholder.svg?height=200&width=300",
+      color: "bg-blue-100"
     },
     {
-      title: "Função das Madrinhas",
-      description: "Organize as responsabilidades e deixe recados especiais",
+      title: "Papéis Definidos",
+      description: "Defina as responsabilidades de cada madrinha",
+      image: "/images/features/feature-roles.jpg",
+      alt: "Amigas em diferentes papéis na celebração",
       icon: "👯‍♀️",
       href: "/roles",
-      color: "bg-green-100",
-      image: "/placeholder.svg?height=200&width=300",
+      color: "bg-green-100"
     },
     {
-      title: "Planos e Preços",
-      description: "Escolha o plano ideal para a despedida perfeita",
-      icon: "💎",
-      href: "/pricing",
-      color: "bg-yellow-100",
-      image: "/placeholder.svg?height=200&width=300",
-    },
-    {
-      title: "Compartilhar",
-      description: "Compartilhe as memórias com a noiva e as madrinhas",
+      title: "Compartilhamento Fácil",
+      description: "Compartilhe os momentos com todos os convidados",
+      image: "/images/features/feature-sharing.jpg",
+      alt: "Grupo compartilhando fotos e momentos",
       icon: "🔗",
       href: "/share",
-      color: "bg-red-100",
-      image: "/placeholder.svg?height=200&width=300",
-    },
+      color: "bg-red-100"
+    }
   ]
 
   return (
@@ -63,8 +70,8 @@ export default function Home() {
       <header className="relative h-[70vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/banner-despedida.jpg"
-            alt="Grupo de amigas celebrando uma despedida de solteira com taças de champanhe"
+            src="/images/banners/banner-despedida.jpg"
+            alt="Grupo de amigas celebrando a despedida de solteira"
             fill
             className="object-cover opacity-40"
             priority
@@ -151,7 +158,7 @@ export default function Home() {
                   <div className="relative h-40">
                     <Image
                       src={feature.image || "/placeholder.svg"}
-                      alt={feature.title}
+                      alt={feature.alt}
                       fill
                       className="object-cover"
                     />
@@ -228,12 +235,12 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {["/images/momento1.jpg", "/images/momento2.jpg", "/images/momento3.jpg", "/images/momento4.jpg"].map(
+            {["/images/moments/momento1.jpg", "/images/moments/momento2.jpg", "/images/moments/momento3.jpg", "/images/moments/momento4.jpg"].map(
               (image, index) => (
                 <div key={index} className="relative aspect-square rounded-lg overflow-hidden">
                   <Image
                     src={image || "/placeholder.svg"}
-                    alt={`Momento de despedida de solteira ${index + 1}`}
+                    alt={`Momento especial ${index + 1} da despedida de solteira`}
                     fill
                     className="object-cover hover:scale-105 transition-transform duration-300"
                   />

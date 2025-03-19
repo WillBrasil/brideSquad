@@ -16,62 +16,71 @@ import {
 } from "@/components/ui/dialog"
 import Image from "next/image"
 
+interface Look {
+  id: number
+  title: string
+  description: string
+  image: string
+  alt: string
+  tags: string[]
+}
+
 export default function LooksGallery() {
   const [selectedTab, setSelectedTab] = useState("todos")
-  const [selectedLook, setSelectedLook] = useState<null | {
-    id: number
-    title: string
-    image: string
-    price: number
-    category: string
-  }>(null)
+  const [selectedLook, setSelectedLook] = useState<null | Look>(null)
 
   const looks = [
     {
       id: 1,
-      title: "Kit Camisetas Personalizadas",
-      image: "/images/look-camisetas.jpg",
-      price: 129.9,
-      category: "camisetas",
+      title: "Camisetas Personalizadas",
+      description: "Looks com camisetas personalizadas para o grupo",
+      image: "/images/looks/look-camisetas.jpg",
+      alt: "Grupo usando camisetas personalizadas combinando",
+      tags: ["casual", "personalizado"]
     },
     {
       id: 2,
-      title: "Fantasia de Noiva",
-      image: "/images/look-fantasia.jpg",
-      price: 89.9,
-      category: "fantasias",
+      title: "Fantasias Temáticas",
+      description: "Ideias de fantasias para festas temáticas",
+      image: "/images/looks/look-fantasia.jpg",
+      alt: "Grupo usando fantasias temáticas divertidas",
+      tags: ["fantasia", "temático"]
     },
     {
       id: 3,
-      title: "Kit Acessórios Divertidos",
-      image: "/placeholder.svg?height=400&width=300",
-      price: 59.9,
-      category: "acessorios",
+      title: "Look Praia",
+      description: "Looks para despedida na praia",
+      image: "/images/looks/look-praia.jpg",
+      alt: "Grupo com looks coordenados para praia",
+      tags: ["praia", "verão"]
     },
     {
       id: 4,
-      title: "Camiseta Team Bride",
-      image: "/placeholder.svg?height=400&width=300",
-      price: 49.9,
-      category: "camisetas",
+      title: "Look Noite",
+      description: "Looks elegantes para festa noturna",
+      image: "/images/looks/look-noite.jpg",
+      alt: "Grupo com looks elegantes para festa noturna",
+      tags: ["noite", "elegante"]
     },
     {
       id: 5,
-      title: "Fantasia de Anjo e Diabinha",
-      image: "/placeholder.svg?height=400&width=300",
-      price: 119.9,
-      category: "fantasias",
+      title: "Look Spa Day",
+      description: "Looks confortáveis para dia de spa",
+      image: "/images/looks/look-spa.jpg",
+      alt: "Grupo com looks confortáveis para spa",
+      tags: ["spa", "relax"]
     },
     {
       id: 6,
-      title: "Tiaras Personalizadas",
-      image: "/placeholder.svg?height=400&width=300",
-      price: 39.9,
-      category: "acessorios",
-    },
+      title: "Look Temático",
+      description: "Looks para festas com tema específico",
+      image: "/images/looks/look-tematico.jpg",
+      alt: "Grupo com looks temáticos especiais",
+      tags: ["temático", "festa"]
+    }
   ]
 
-  const filteredLooks = selectedTab === "todos" ? looks : looks.filter((look) => look.category === selectedTab)
+  const filteredLooks = selectedTab === "todos" ? looks : looks.filter((look) => look.tags.includes(selectedTab))
 
   return (
     <div>
@@ -86,9 +95,16 @@ export default function LooksGallery() {
         <Tabs defaultValue="todos" value={selectedTab} onValueChange={setSelectedTab}>
           <TabsList>
             <TabsTrigger value="todos">Todos</TabsTrigger>
-            <TabsTrigger value="camisetas">Camisetas</TabsTrigger>
-            <TabsTrigger value="fantasias">Fantasias</TabsTrigger>
-            <TabsTrigger value="acessorios">Acessórios</TabsTrigger>
+            <TabsTrigger value="casual">Casual</TabsTrigger>
+            <TabsTrigger value="personalizado">Personalizado</TabsTrigger>
+            <TabsTrigger value="fantasia">Fantasia</TabsTrigger>
+            <TabsTrigger value="temático">Tema</TabsTrigger>
+            <TabsTrigger value="praia">Praia</TabsTrigger>
+            <TabsTrigger value="verão">Verão</TabsTrigger>
+            <TabsTrigger value="noite">Noite</TabsTrigger>
+            <TabsTrigger value="elegante">Elegante</TabsTrigger>
+            <TabsTrigger value="spa">Spa</TabsTrigger>
+            <TabsTrigger value="relax">Relax</TabsTrigger>
           </TabsList>
         </Tabs>
 
@@ -103,11 +119,10 @@ export default function LooksGallery() {
           <Card key={look.id} className="overflow-hidden group">
             <div className="relative">
               <Image
-                src={look.image || "/placeholder.svg"}
-                alt={look.title}
-                width={300}
-                height={400}
-                className="w-full h-64 object-cover"
+                src={look.image}
+                alt={look.alt}
+                fill
+                className="object-cover transition-all duration-300 group-hover:scale-105"
               />
               <div className="absolute top-3 right-3">
                 <Button variant="ghost" size="icon" className="rounded-full bg-white/80 hover:bg-white">
@@ -130,26 +145,31 @@ export default function LooksGallery() {
                       {selectedLook && (
                         <div className="grid gap-4">
                           <div
-                            className={`w-full h-64 ${selectedLook.category === "camisetas" ? "bg-pink-200" : selectedLook.category === "fantasias" ? "bg-purple-200" : "bg-blue-200"} rounded-md flex items-center justify-center`}
+                            className={`w-full h-64 ${selectedLook.tags.includes("casual") ? "bg-pink-200" : selectedLook.tags.includes("fantasia") ? "bg-purple-200" : selectedLook.tags.includes("temático") ? "bg-blue-200" : "bg-blue-200"} rounded-md flex items-center justify-center`}
                           >
                             <span className="text-6xl">
-                              {selectedLook.category === "camisetas"
+                              {selectedLook.tags.includes("casual")
                                 ? "👚"
-                                : selectedLook.category === "fantasias"
+                                : selectedLook.tags.includes("fantasia")
                                   ? "👗"
-                                  : "👑"}
+                                  : selectedLook.tags.includes("temático")
+                                    ? "👑"
+                                    : "👑"}
                             </span>
                           </div>
                           <div className="space-y-2">
                             <h3 className="font-medium text-lg">{selectedLook.title}</h3>
                             <p className="text-gray-500">
-                              Produto perfeito para despedidas de solteira. Disponível em várias cores e tamanhos.
+                              {selectedLook.description}
                             </p>
                             <div className="flex items-center justify-between">
-                              <span className="text-xl font-bold text-pink-600">
-                                R$ {selectedLook.price.toFixed(2)}
-                              </span>
-                              <Badge>Personalização disponível</Badge>
+                              <div className="flex items-center space-x-2">
+                                {selectedLook.tags.map((tag, index) => (
+                                  <Badge key={index} variant="secondary">
+                                    {tag}
+                                  </Badge>
+                                ))}
+                              </div>
                             </div>
                           </div>
                           <Button className="w-full bg-pink-600 hover:bg-pink-700">
@@ -165,12 +185,11 @@ export default function LooksGallery() {
             </div>
             <CardContent className="p-4">
               <h3 className="font-medium">{look.title}</h3>
-              <p className="text-pink-600 font-bold mt-1">R$ {look.price.toFixed(2)}</p>
+              <p className="text-gray-500 mt-1">{look.description}</p>
             </CardContent>
             <CardFooter className="p-4 pt-0">
               <Button variant="outline" className="w-full">
-                <ShoppingBag className="h-4 w-4 mr-2" />
-                Comprar
+                Ver Detalhes
               </Button>
             </CardFooter>
           </Card>

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, use } from "react"
 import { ChevronLeft, Share2, Download, Heart, MessageCircle, Copy, ImageIcon, Music } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation"
 
 export default function PreviewPage({ params }: { params: { id: string } }) {
   const router = useRouter()
+  const id = use(Promise.resolve(params.id))
   const [previewData, setPreviewData] = useState<any>(null)
   const [loading, setLoading] = useState(true)
 
@@ -26,11 +27,11 @@ export default function PreviewPage({ params }: { params: { id: string } }) {
     // Simulação de uma chamada de API
     setTimeout(() => {
       // Verificar se é um novo cartão (ID começa com "new-")
-      const isNewCard = params.id.startsWith("new-")
+      const isNewCard = id.startsWith("new-")
 
       // Dados simulados para o cartão
       const cardData = {
-        id: params.id,
+        id: id,
         title: isNewCard ? "Novo Cartão" : "Despedida da Ana",
         date: "15 de Junho, 2024",
         location: "Praia do Forte, Bahia",
@@ -83,7 +84,7 @@ export default function PreviewPage({ params }: { params: { id: string } }) {
         ],
         likes: 24,
         views: 89,
-        shareLink: `https://bridesquad.com/preview/${params.id}`,
+        shareLink: `https://bridesquad.com/preview/${id}`,
 
         // Adicionando as seções da página principal
         hero: {
@@ -167,11 +168,11 @@ export default function PreviewPage({ params }: { params: { id: string } }) {
       setPreviewData(cardData)
       setLoading(false)
     }, 1000)
-  }, [params.id])
+  }, [id])
 
   // Função para voltar para a página de edição
   const handleBackToEdit = () => {
-    router.push(`/dashboard/edit/${params.id}`)
+    router.push(`/dashboard/edit/${id}`)
   }
 
   if (loading) {
@@ -294,8 +295,12 @@ export default function PreviewPage({ params }: { params: { id: string } }) {
               <CardFooter>
                 <div className="w-full">
                   <p className="text-sm font-medium text-gray-500 mb-2">Link para compartilhar</p>
-                  <div className="flex">
-                    <Input value={previewData.shareLink} readOnly className="rounded-r-none" />
+                  <div className="flex items-center space-x-4">
+                    <Input
+                      readOnly
+                      value={`https://bridesquad.com/preview/${id}`}
+                      className="bg-gray-50"
+                    />
                     <Button variant="outline" className="rounded-l-none">
                       <Copy className="h-4 w-4" />
                     </Button>

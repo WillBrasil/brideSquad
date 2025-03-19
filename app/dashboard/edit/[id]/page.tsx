@@ -58,16 +58,55 @@ import {
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import { use } from "react"
 
-export default function EditCardPage({ params }: { params: { id: string } }) {
+interface ShareOptions {
+  allowComments: boolean
+  isPrivate: boolean
+  requirePassword: boolean
+  password: string
+  expirationDate: string
+}
+
+interface Feature {
+  id: number
+  title: string
+  description: string
+  icon: string
+  color: string
+  image: string | null
+}
+
+interface Hero {
+  title: string
+  subtitle: string
+  backgroundImage: string | null
+}
+
+interface CardData {
+  id: string
+  title: string
+  description: string
+  coverImage: string | null
+  status: string
+  hero: Hero
+  features: Feature[]
+  // ... other fields ...
+}
+
+interface PageProps {
+  params: Promise<{ id: string }>
+}
+
+export default function EditCardPage({ params }: PageProps) {
+  const { id } = use(params)
   const router = useRouter()
   const [isSaving, setIsSaving] = useState(false)
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
   const [activeTab, setActiveTab] = useState("basic")
 
-  // Atualizar o estado inicial para incluir todos os elementos da página principal
-  const [cardData, setCardData] = useState({
-    id: params.id,
+  const defaultCard = {
+    id,
     title: "Despedida da Ana",
     description: "Um fim de semana inesquecível para celebrar a última aventura de solteira da Ana!",
     date: "2024-06-15",
@@ -205,24 +244,28 @@ export default function EditCardPage({ params }: { params: { id: string } }) {
       password: "",
       expirationDate: "",
     },
-  })
+  }
 
-  // Adicionar lógica para detectar se é um novo cartão
+  const [cardData, setCardData] = useState(defaultCard)
+
   useEffect(() => {
-    // Se o ID começar com "new-", significa que é um novo cartão
-    if (params.id.startsWith("new-")) {
-      // Podemos inicializar com valores padrão para um novo cartão
+    // Carregar dados do cartão do backend
+    // Simulando uma chamada API
+    const isNewCard = id.startsWith("new-")
+    if (isNewCard) {
       setCardData({
-        ...cardData,
+        ...defaultCard,
         title: "Novo Cartão",
         description: "Descrição do novo cartão",
         status: "draft",
       })
+    } else {
+      setCardData(defaultCard)
     }
-  }, [params.id])
+  }, [id])
 
   // Adicionar funções para manipular os novos elementos
-  const updateHero = (field: string, value: string) => {
+  const updateHero = (field: string, value: string | null) => {
     setCardData((prev) => ({
       ...prev,
       hero: {
@@ -253,10 +296,12 @@ export default function EditCardPage({ params }: { params: { id: string } }) {
     }))
   }
 
-  const updateFeature = (id: number, field: string, value: any) => {
+  const updateFeature = (id: number, field: string, value: string | null) => {
     setCardData((prev) => ({
       ...prev,
-      features: prev.features.map((feature) => (feature.id === id ? { ...feature, [field]: value } : feature)),
+      features: prev.features.map((feature) => 
+        feature.id === id ? { ...feature, [field]: value } : feature
+      ),
     }))
   }
 
@@ -341,7 +386,7 @@ export default function EditCardPage({ params }: { params: { id: string } }) {
   }
 
   // Funções para manipular os dados
-  const updateBasicInfo = (field: string, value: string) => {
+  const updateBasicInfo = (field: string, value: string | null) => {
     setCardData((prev) => ({
       ...prev,
       [field]: value,
@@ -450,7 +495,7 @@ export default function EditCardPage({ params }: { params: { id: string } }) {
     }))
   }
 
-  const updateShareOptions = (field: string, value: any) => {
+  const updateShareOptions = (field: keyof ShareOptions, value: boolean | string) => {
     setCardData((prev) => ({
       ...prev,
       shareOptions: {
@@ -476,7 +521,31 @@ export default function EditCardPage({ params }: { params: { id: string } }) {
   }
 
   const handlePreview = () => {
-    router.push(`/preview/${params.id}`)
+    router.push(`/preview/${id}`)
+  }
+
+  const handleCheckboxChange = (checked: boolean) => {
+    // ... existing code ...
+  }
+
+  const handleInputChange = (value: string) => {
+    // ... existing code ...
+  }
+
+  const handleSelectChange = (value: string) => {
+    // ... existing code ...
+  }
+
+  const handlePrivacyChange = (checked: boolean) => {
+    // ... existing code ...
+  }
+
+  const handleNotificationsChange = (checked: boolean) => {
+    // ... existing code ...
+  }
+
+  const handleCommentsChange = (checked: boolean) => {
+    // ... existing code ...
   }
 
   return (
@@ -671,7 +740,7 @@ export default function EditCardPage({ params }: { params: { id: string } }) {
                     <span className="text-sm mr-2">{cardData.shareOptions.isPrivate ? "Privado" : "Público"}</span>
                     <Switch
                       checked={!cardData.shareOptions.isPrivate}
-                      onCheckedChange={(checked) => updateShareOptions("isPrivate", !checked)}
+                      onCheckedChange={(checked: boolean) => updateShareOptions("isPrivate", !checked)}
                     />
                   </div>
                 </div>
@@ -781,7 +850,7 @@ export default function EditCardPage({ params }: { params: { id: string } }) {
 
                     <div className="space-y-2">
                       <Label htmlFor="status">Status do Cartão</Label>
-                      <Select value={cardData.status} onValueChange={(value) => updateBasicInfo("status", value)}>
+                      <Select value={cardData.status} onValueChange={(value: string) => updateBasicInfo("status", value)}>
                         <SelectTrigger>
                           <SelectValue placeholder="Selecione o status" />
                         </SelectTrigger>
@@ -916,7 +985,7 @@ export default function EditCardPage({ params }: { params: { id: string } }) {
                                 <Label htmlFor={`feature-icon-${feature.id}`}>Ícone</Label>
                                 <Select
                                   value={feature.icon}
-                                  onValueChange={(value) => updateFeature(feature.id, "icon", value)}
+                                  onValueChange={(value: string) => updateFeature(feature.id, "icon", value)}
                                 >
                                   <SelectTrigger>
                                     <SelectValue placeholder="Selecione um ícone" />
@@ -939,7 +1008,7 @@ export default function EditCardPage({ params }: { params: { id: string } }) {
                                 <Label htmlFor={`feature-color-${feature.id}`}>Cor de Fundo</Label>
                                 <Select
                                   value={feature.color}
-                                  onValueChange={(value) => updateFeature(feature.id, "color", value)}
+                                  onValueChange={(value: string) => updateFeature(feature.id, "color", value)}
                                 >
                                   <SelectTrigger>
                                     <SelectValue placeholder="Selecione uma cor" />
@@ -1461,7 +1530,7 @@ export default function EditCardPage({ params }: { params: { id: string } }) {
                         </div>
                         <Switch
                           checked={!cardData.shareOptions.isPrivate}
-                          onCheckedChange={(checked) => updateShareOptions("isPrivate", checked)}
+                          onCheckedChange={(checked: boolean) => updateShareOptions("isPrivate", checked)}
                         />
                       </div>
 
@@ -1472,7 +1541,7 @@ export default function EditCardPage({ params }: { params: { id: string } }) {
                         </div>
                         <Switch
                           checked={cardData.shareOptions.allowComments}
-                          onCheckedChange={(checked) => updateShareOptions("allowComments", checked)}
+                          onCheckedChange={(checked: boolean) => updateShareOptions("allowComments", checked)}
                         />
                       </div>
 
@@ -1483,7 +1552,7 @@ export default function EditCardPage({ params }: { params: { id: string } }) {
                         </div>
                         <Switch
                           checked={cardData.shareOptions.requirePassword}
-                          onCheckedChange={(checked) => updateShareOptions("requirePassword", checked)}
+                          onCheckedChange={(checked: boolean) => updateShareOptions("requirePassword", checked)}
                         />
                       </div>
 
@@ -1517,20 +1586,15 @@ export default function EditCardPage({ params }: { params: { id: string } }) {
                     <div className="space-y-4">
                       <h3 className="font-medium">Link para Compartilhar</h3>
 
-                      <div className="flex">
+                      <div className="flex items-center space-x-4">
                         <Input
-                          value={`https://bridesquad.com/preview/${params.id}`}
                           readOnly
-                          className="rounded-r-none"
+                          value={`https://bridesquad.com/preview/${id}`}
+                          className="bg-gray-50"
                         />
                         <Button variant="outline" className="rounded-l-none">
-                          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
-                            />
+                          <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
                           </svg>
                         </Button>
                       </div>
@@ -1550,7 +1614,7 @@ export default function EditCardPage({ params }: { params: { id: string } }) {
                         </Button>
                         <Button variant="outline" className="flex-1">
                           <svg className="h-4 w-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M21.11 2.89A12.91 12.91 0 0 0 12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12c0-3.55-1.55-6.91-4.24-9.21l1.41-1.41L18.76.88 17.35 2.3zM12 22c-5.52 0-10-4.48-10-10S6.48 2 12 2s10 4.48 10 10-4.48 10-10 10zm-1-17.93c-3.94.49-7 3.85-7 7.93s3.05 7.44 7 7.93V18h-2v-2h2v-2.68c0-1.15.37-2.04 1.08-2.65.71-.61 1.67-.92 2.87-.92.39 0 .8.03 1.22.08.43.05.79.12 1.08.2v2.1c-.32-.12-.59-.2-.81-.24-.22-.04-.45-.06-.69-.06-.61 0-1.06.16-1.36.47-.3.31-.44.75-.44 1.32V14h3l-.44 2h-2.56v4.93z" />
+                            <path d="M21.11 2.89A12.91 12.91 0 0 0 12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12c0-3.55-1.55-6.91-4.24-9.21l1.41-1.41L18.76.88 17.35 2.3zM12 22c-5.52 0-10-4.48-10-10S6.48 2 12 2s10 4.48 10 10zm-1-17.93c-3.94.49-7 3.85-7 7.93s3.05 7.44 7 7.93V18h-2v-2h2v-2.68c0-1.15.37-2.04 1.08-2.65.71-.61 1.67-.92 2.87-.92.39 0 .8.03 1.22.08.43.05.79.12 1.08.2v2.1c-.32-.12-.59-.2-.81-.24-.22-.04-.45-.06-.69-.06-.61 0-1.06.16-1.36.47-.3.31-.44.75-.44 1.32V14h3l-.44 2h-2.56v4.93z" />
                           </svg>
                           WhatsApp
                         </Button>

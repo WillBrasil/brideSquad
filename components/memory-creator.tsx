@@ -9,6 +9,30 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
+
+const defaultPhotos = [
+  {
+    id: 1,
+    url: "/images/moments/momento1.jpg",
+    alt: "Momento especial da despedida de solteira 1"
+  },
+  {
+    id: 2,
+    url: "/images/moments/momento2.jpg",
+    alt: "Momento especial da despedida de solteira 2"
+  },
+  {
+    id: 3,
+    url: "/images/moments/momento3.jpg",
+    alt: "Momento especial da despedida de solteira 3"
+  },
+  {
+    id: 4,
+    url: "/images/moments/momento4.jpg",
+    alt: "Momento especial da despedida de solteira 4"
+  }
+]
 
 export default function MemoryCreator() {
   const router = useRouter()
@@ -111,11 +135,14 @@ export default function MemoryCreator() {
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-6">
-                {[0, 1].map((index) => (
-                  <div key={index} className="relative group">
-                    <div className="w-full h-32 bg-pink-200 rounded-lg flex items-center justify-center">
-                      <ImageIcon className="h-8 w-8 text-pink-500" />
-                    </div>
+                {defaultPhotos.map((photo) => (
+                  <div key={photo.id} className="relative group">
+                    <Image
+                      src={photo.url}
+                      alt={photo.alt}
+                      fill
+                      className="object-cover transition-all duration-300 group-hover:scale-105"
+                    />
                     <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
                       <Button variant="ghost" size="icon" className="text-white">
                         <Upload className="h-5 w-5" />
