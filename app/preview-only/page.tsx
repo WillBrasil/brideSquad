@@ -7,7 +7,6 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import Image from "next/image"
@@ -52,8 +51,8 @@ export default function PreviewOnlyPage() {
           </AlertDescription>
         </Alert>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-          <div className="lg:col-span-2">
+        <div className="grid grid-cols-1 gap-6 mb-8">
+          <div>
             <Card className="overflow-hidden shadow-md">
               <div className="h-2 bg-gradient-to-r from-pink-400 to-pink-600"></div>
               <CardHeader className="pb-2">
@@ -95,148 +94,184 @@ export default function PreviewOnlyPage() {
                   </div>
                 </div>
 
-                <Tabs defaultValue="fotos" className="w-full">
-                  <TabsList className="grid grid-cols-4 mb-4">
-                    <TabsTrigger value="fotos" className="text-xs sm:text-sm">Fotos</TabsTrigger>
-                    <TabsTrigger value="roteiro" className="text-xs sm:text-sm">Roteiro</TabsTrigger>
-                    <TabsTrigger value="mensagens" className="text-xs sm:text-sm">Mensagens</TabsTrigger>
-                    <TabsTrigger value="madrinhas" className="text-xs sm:text-sm">Madrinhas</TabsTrigger>
-                  </TabsList>
-
-                  <TabsContent value="fotos">
-                    <div className="space-y-4">
-                      <div className="grid grid-cols-2 sm:grid-cols-2 gap-3">
-                        {[
-                          {
-                            url: "/images/moments/momento1.jpg",
-                            title: "Festa com as Amigas"
-                          },
-                          {
-                            url: "/images/moments/momento2.jpg",
-                            title: "Dança e Diversão"
-                          },
-                          {
-                            url: "/images/moments/momento3.jpg",
-                            title: "Brinde Especial"
-                          },
-                          {
-                            url: "/images/moments/momento4.jpg",
-                            title: "Momentos de Alegria"
-                          }
-                        ].map((photo, i) => (
-                          <div key={i} className="relative aspect-square rounded-lg overflow-hidden group">
-                            <Image
-                              src={photo.url}
-                              alt={photo.title}
-                              fill
-                              className="object-cover transition-transform group-hover:scale-105"
-                            />
-                            <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                              <Lock className="h-6 w-6 text-white" />
-                            </div>
-                            <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/60 to-transparent">
-                              <p className="text-white text-xs">{photo.title}</p>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                      <div className="bg-gray-50 p-3 rounded-lg text-center">
-                        <Lock className="h-5 w-5 text-gray-400 mx-auto mb-1" />
-                        <p className="text-xs text-gray-500">Galeria completa disponível no plano Premium</p>
-                      </div>
-                    </div>
-                  </TabsContent>
-
-                  <TabsContent value="roteiro">
-                    <div className="space-y-3">
+                {/* Fotos */}
+                <div className="border-t pt-4">
+                  <h3 className="text-base font-medium mb-3 flex items-center">
+                    <Camera className="h-4 w-4 mr-2 text-pink-500" />
+                    Fotos
+                  </h3>
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-2 sm:grid-cols-2 gap-3">
                       {[
-                        { time: "16:00", activity: "Check-in no resort", location: "Resort Praia do Forte" },
-                        { time: "19:00", activity: "Jantar de boas-vindas", location: "Restaurante do resort" },
-                        { time: "21:30", activity: "Drinks e jogos", location: "Bar da piscina" },
-                      ].map((event, i) => (
-                        <div key={i} className="flex border-l-2 border-pink-300 pl-3 py-1">
-                          <div className="w-16 font-medium text-pink-600 text-sm">{event.time}</div>
-                          <div>
-                            <h4 className="font-medium text-sm">{event.activity}</h4>
-                            <p className="text-gray-500 text-xs">{event.location}</p>
+                        {
+                          url: "/images/moments/momento1.jpg",
+                          title: "Festa com as Amigas"
+                        },
+                        {
+                          url: "/images/moments/momento2.jpg",
+                          title: "Dança e Diversão"
+                        },
+                        {
+                          url: "/images/moments/momento3.jpg",
+                          title: "Brinde Especial"
+                        },
+                        {
+                          url: "/images/moments/momento4.jpg",
+                          title: "Momentos de Alegria"
+                        }
+                      ].map((photo, i) => (
+                        <div key={i} className="relative aspect-square rounded-lg overflow-hidden group">
+                          <Image
+                            src={photo.url}
+                            alt={photo.title}
+                            fill
+                            className="object-cover transition-transform group-hover:scale-105"
+                          />
+                          <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <Lock className="h-6 w-6 text-white" />
+                          </div>
+                          <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/60 to-transparent">
+                            <p className="text-white text-xs">{photo.title}</p>
                           </div>
                         </div>
                       ))}
                     </div>
-                  </TabsContent>
+                    <div className="bg-gray-50 p-3 rounded-lg text-center">
+                      <Lock className="h-5 w-5 text-gray-400 mx-auto mb-1" />
+                      <p className="text-xs text-gray-500">Galeria completa disponível no plano Premium</p>
+                    </div>
+                  </div>
+                </div>
 
-                  <TabsContent value="mensagens">
-                    <div className="space-y-3">
+                {/* Roteiro */}
+                <div className="border-t pt-4 mt-6">
+                  <h3 className="text-base font-medium mb-3 flex items-center">
+                    <Calendar className="h-4 w-4 mr-2 text-pink-500" />
+                    Roteiro
+                  </h3>
+                  <div className="space-y-3">
+                    {[
+                      { time: "16:00", activity: "Check-in no resort", location: "Resort Praia do Forte" },
+                      { time: "19:00", activity: "Jantar de boas-vindas", location: "Restaurante do resort" },
+                      { time: "21:30", activity: "Drinks e jogos", location: "Bar da piscina" },
+                    ].map((event, i) => (
+                      <div key={i} className="flex border-l-2 border-pink-300 pl-3 py-1">
+                        <div className="w-16 font-medium text-pink-600 text-sm">{event.time}</div>
+                        <div>
+                          <h4 className="font-medium text-sm">{event.activity}</h4>
+                          <p className="text-gray-500 text-xs">{event.location}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Mensagens */}
+                <div className="border-t pt-4 mt-6">
+                  <h3 className="text-base font-medium mb-3 flex items-center">
+                    <MessageCircle className="h-4 w-4 mr-2 text-pink-500" />
+                    Mensagens
+                  </h3>
+                  <div className="space-y-3">
+                    {[
+                      {
+                        author: "Juliana Costa",
+                        content: "Ana, que essa nova fase seja repleta de amor e felicidade! Estou muito feliz por você!",
+                        date: "2 dias atrás",
+                      },
+                      {
+                        author: "Fernanda Oliveira",
+                        content: "Amiga, você merece toda a felicidade do mundo! Mal posso esperar para celebrar com você!",
+                        date: "1 dia atrás",
+                      },
+                    ].map((message, i) => (
+                      <div key={i} className="bg-pink-50 p-3 rounded-lg">
+                        <p className="italic text-gray-700 mb-2 text-sm">"{message.content}"</p>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center">
+                            <Avatar className="h-6 w-6 mr-2">
+                              <AvatarFallback className="bg-pink-200 text-pink-700 text-xs">
+                                {message.author.charAt(0)}
+                              </AvatarFallback>
+                            </Avatar>
+                            <span className="text-xs font-medium">{message.author}</span>
+                          </div>
+                          <span className="text-xs text-gray-500">{message.date}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Madrinhas */}
+                <div className="border-t pt-4 mt-6">
+                  <h3 className="text-base font-medium mb-3 flex items-center">
+                    <Users className="h-4 w-4 mr-2 text-pink-500" />
+                    Madrinhas
+                  </h3>
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {[
                         {
-                          author: "Juliana Costa",
-                          content: "Ana, que essa nova fase seja repleta de amor e felicidade! Estou muito feliz por você!",
-                          date: "2 dias atrás",
+                          name: "Mariana Silva",
+                          role: "Madrinha da Zueira",
+                          message: "Vamos fazer dessa despedida a melhor de todas!",
+                          avatar: "/images/bridesmaids/mariana.jpg"
                         },
                         {
-                          author: "Fernanda Oliveira",
-                          content: "Amiga, você merece toda a felicidade do mundo! Mal posso esperar para celebrar com você!",
-                          date: "1 dia atrás",
+                          name: "Juliana Costa",
+                          role: "Madrinha das Fotos",
+                          message: "Pronta para registrar todos os momentos!",
+                          avatar: "/images/bridesmaids/juliana.jpg"
                         },
-                      ].map((message, i) => (
+                      ].map((bridesmaid, i) => (
                         <div key={i} className="bg-pink-50 p-3 rounded-lg">
-                          <p className="italic text-gray-700 mb-2 text-sm">"{message.content}"</p>
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center">
-                              <Avatar className="h-6 w-6 mr-2">
-                                <AvatarFallback className="bg-pink-200 text-pink-700 text-xs">
-                                  {message.author.charAt(0)}
-                                </AvatarFallback>
-                              </Avatar>
-                              <span className="text-xs font-medium">{message.author}</span>
+                          <div className="flex items-center mb-2">
+                            <Avatar className="h-10 w-10 mr-2">
+                              <Image
+                                src={bridesmaid.avatar}
+                                alt={bridesmaid.name}
+                                width={40}
+                                height={40}
+                                className="rounded-full"
+                              />
+                            </Avatar>
+                            <div>
+                              <h4 className="font-medium text-sm">{bridesmaid.name}</h4>
+                              <p className="text-xs text-pink-600">{bridesmaid.role}</p>
                             </div>
-                            <span className="text-xs text-gray-500">{message.date}</span>
                           </div>
+                          <p className="text-xs text-gray-600 italic">"{bridesmaid.message}"</p>
                         </div>
                       ))}
                     </div>
-                  </TabsContent>
+                  </div>
+                </div>
 
-                  <TabsContent value="madrinhas">
-                    <div className="space-y-4">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        {[
-                          {
-                            name: "Mariana Silva",
-                            role: "Madrinha da Zueira",
-                            message: "Vamos fazer dessa despedida a melhor de todas!",
-                            avatar: "/images/bridesmaids/mariana.jpg"
-                          },
-                          {
-                            name: "Juliana Costa",
-                            role: "Madrinha das Fotos",
-                            message: "Pronta para registrar todos os momentos!",
-                            avatar: "/images/bridesmaids/juliana.jpg"
-                          },
-                        ].map((bridesmaid, i) => (
-                          <div key={i} className="bg-pink-50 p-3 rounded-lg">
-                            <div className="flex items-center mb-2">
-                              <Avatar className="h-10 w-10 mr-2">
-                                <Image
-                                  src={bridesmaid.avatar}
-                                  alt={bridesmaid.name}
-                                  width={40}
-                                  height={40}
-                                  className="rounded-full"
-                                />
-                              </Avatar>
-                              <div>
-                                <h4 className="font-medium text-sm">{bridesmaid.name}</h4>
-                                <p className="text-xs text-pink-600">{bridesmaid.role}</p>
-                              </div>
-                            </div>
-                            <p className="text-xs text-gray-600 italic">"{bridesmaid.message}"</p>
-                          </div>
-                        ))}
+                {/* Música de Fundo */}
+                <div className="border-t pt-4 mt-6">
+                  <h3 className="text-base font-medium mb-3 flex items-center">
+                    <Music className="h-4 w-4 mr-2 text-pink-500" />
+                    Música de Fundo
+                  </h3>
+                  <div className="flex justify-center">
+                    <div className="space-y-3 w-full max-w-md">
+                      <div className="aspect-video w-full">
+                        <MusicPlayer 
+                          title="Dua Lipa - New Rules" 
+                          videoId="k2qgadSvNyU"
+                          isPremium={true}
+                        />
+                      </div>
+                      <div className="text-center mt-2">
+                        <p className="text-xs text-gray-500">Adicione músicas personalizadas aos seus cartões</p>
+                        <Badge variant="outline" className="bg-pink-50 text-pink-700 border-pink-200 text-xs mt-1">
+                          Recurso Premium
+                        </Badge>
                       </div>
                     </div>
-                  </TabsContent>
-                </Tabs>
+                  </div>
+                </div>
               </CardContent>
               <CardFooter className="bg-gray-50 border-t flex justify-between py-2">
                 <div className="flex items-center space-x-3">
@@ -258,32 +293,6 @@ export default function PreviewOnlyPage() {
                   </Button>
                 </div>
               </CardFooter>
-            </Card>
-          </div>
-
-          <div className="lg:col-span-1">
-            <Card className="shadow-md h-full">
-              <CardHeader>
-                <CardTitle className="text-lg flex items-center">
-                  <Music className="h-5 w-5 mr-2 text-pink-500" />
-                  <span>Música de Fundo</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <MusicPlayer 
-                    title="Dua Lipa - New Rules" 
-                    videoId="k2qgadSvNyU"
-                    isPremium={true}
-                  />
-                  <div className="text-center mt-4">
-                    <p className="text-sm text-gray-500 mb-2">Adicione músicas personalizadas aos seus cartões</p>
-                    <Badge variant="outline" className="bg-pink-50 text-pink-700 border-pink-200">
-                      Recurso Premium
-                    </Badge>
-                  </div>
-                </div>
-              </CardContent>
             </Card>
           </div>
         </div>
