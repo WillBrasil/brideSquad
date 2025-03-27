@@ -1,7 +1,7 @@
 "use client"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { Sparkles, ChevronLeft, ArrowRight, Lock, Heart, MessageCircle, Share2, Download, Music, Calendar, MapPin, Camera, Users, Gift, Crown } from "lucide-react"
+import { Sparkles, ChevronLeft, ArrowRight, Lock, Heart, MessageCircle, Share2, Download, Music, Calendar, MapPin, Camera, Users, Gift, Crown, List, MoreVertical } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import Image from "next/image"
 import { MusicPlayer } from "@/components/music-player"
+import { cn } from "@/lib/utils"
 
 export default function PreviewOnlyPage() {
   const router = useRouter()
@@ -32,6 +33,28 @@ export default function PreviewOnlyPage() {
       </header>
 
       <div className="container mx-auto px-4 py-6 flex-1 max-w-5xl">
+        {/* Navigation Anchors */}
+        <nav className="mb-6 sticky top-16 bg-white/80 backdrop-blur-sm z-10 -mx-4 px-4 py-2 border-b">
+          <div className="flex space-x-4 overflow-x-auto pb-2 scrollbar-hide">
+            {[
+              { icon: <Camera className="h-4 w-4" />, label: "Fotos", href: "#fotos" },
+              { icon: <Calendar className="h-4 w-4" />, label: "Roteiro", href: "#roteiro" },
+              { icon: <MessageCircle className="h-4 w-4" />, label: "Mensagens", href: "#mensagens" },
+              { icon: <Users className="h-4 w-4" />, label: "Madrinhas", href: "#madrinhas" },
+              { icon: <Music className="h-4 w-4" />, label: "Música", href: "#musica" },
+            ].map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                className="flex items-center px-3 py-1 text-sm text-gray-600 hover:text-pink-600 rounded-full bg-gray-50 hover:bg-pink-50 transition-colors"
+              >
+                {item.icon}
+                <span className="ml-1">{item.label}</span>
+              </a>
+            ))}
+          </div>
+        </nav>
+
         <div className="mb-4 flex items-center justify-between">
           <Link href="/login">
             <Button variant="ghost" className="flex items-center text-pink-600 pl-0">
@@ -95,156 +118,180 @@ export default function PreviewOnlyPage() {
                 </div>
 
                 {/* Fotos */}
-                <div className="border-t pt-4">
+                <div id="fotos" className="border-t pt-4 scroll-mt-32">
                   <h3 className="text-base font-medium mb-3 flex items-center">
                     <Camera className="h-4 w-4 mr-2 text-pink-500" />
                     Fotos
                   </h3>
                   <div className="space-y-4">
-                    <div className="grid grid-cols-2 sm:grid-cols-2 gap-3">
-                      {[
-                        {
-                          url: "/images/moments/momento1.jpg",
-                          title: "Festa com as Amigas"
-                        },
-                        {
-                          url: "/images/moments/momento2.jpg",
-                          title: "Dança e Diversão"
-                        },
-                        {
-                          url: "/images/moments/momento3.jpg",
-                          title: "Brinde Especial"
-                        },
-                        {
-                          url: "/images/moments/momento4.jpg",
-                          title: "Momentos de Alegria"
-                        }
-                      ].map((photo, i) => (
-                        <div key={i} className="relative aspect-square rounded-lg overflow-hidden group">
-                          <Image
-                            src={photo.url}
-                            alt={photo.title}
-                            fill
-                            className="object-cover transition-transform group-hover:scale-105"
-                          />
-                          <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                            <Lock className="h-6 w-6 text-white" />
+                    <div className="relative">
+                      <div className="flex space-x-4 overflow-x-auto pb-4 scrollbar-hide -mx-4 px-4">
+                        {[
+                          {
+                            url: "/images/moments/momento1.jpg",
+                            title: "Festa com as Amigas"
+                          },
+                          {
+                            url: "/images/moments/momento2.jpg",
+                            title: "Dança e Diversão"
+                          },
+                          {
+                            url: "/images/moments/momento3.jpg",
+                            title: "Brinde Especial"
+                          },
+                          {
+                            url: "/images/moments/momento4.jpg",
+                            title: "Momentos de Alegria"
+                          }
+                        ].map((photo, i) => (
+                          <div key={i} className="relative flex-none w-48 aspect-[4/3] rounded-lg overflow-hidden group">
+                            <Image
+                              src={photo.url}
+                              alt={photo.title}
+                              fill
+                              className="object-cover transition-transform group-hover:scale-105"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/30 opacity-0 group-hover:opacity-100 transition-opacity">
+                              <div className="absolute inset-0 flex items-center justify-center">
+                                <Lock className="h-6 w-6 text-white" />
+                              </div>
+                              <div className="absolute bottom-0 left-0 right-0 p-2">
+                                <p className="text-white text-sm font-medium">{photo.title}</p>
+                              </div>
+                            </div>
+                            <div className="absolute top-2 right-2">
+                              <Badge variant="secondary" className="bg-black/50 text-white border-0">
+                                Preview
+                              </Badge>
+                            </div>
                           </div>
-                          <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/60 to-transparent">
-                            <p className="text-white text-xs">{photo.title}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="bg-gray-50 p-3 rounded-lg text-center">
-                      <Lock className="h-5 w-5 text-gray-400 mx-auto mb-1" />
-                      <p className="text-xs text-gray-500">Galeria completa disponível no plano Premium</p>
+                        ))}
+                      </div>
+                      <div className="absolute right-0 top-1/2 -translate-y-1/2 bg-gradient-to-l from-white via-white/80 to-transparent w-12 h-full flex items-center justify-end pr-2">
+                        <Button size="sm" variant="ghost" className="rounded-full h-8 w-8 p-0">
+                          <ArrowRight className="h-4 w-4" />
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </div>
 
                 {/* Roteiro */}
-                <div className="border-t pt-4 mt-6">
-                  <h3 className="text-base font-medium mb-3 flex items-center">
-                    <Calendar className="h-4 w-4 mr-2 text-pink-500" />
-                    Roteiro
-                  </h3>
-                  <div className="space-y-3">
-                    {[
-                      { time: "16:00", activity: "Check-in no resort", location: "Resort Praia do Forte" },
-                      { time: "19:00", activity: "Jantar de boas-vindas", location: "Restaurante do resort" },
-                      { time: "21:30", activity: "Drinks e jogos", location: "Bar da piscina" },
-                    ].map((event, i) => (
-                      <div key={i} className="flex border-l-2 border-pink-300 pl-3 py-1">
-                        <div className="w-16 font-medium text-pink-600 text-sm">{event.time}</div>
-                        <div>
-                          <h4 className="font-medium text-sm">{event.activity}</h4>
-                          <p className="text-gray-500 text-xs">{event.location}</p>
-                        </div>
-                      </div>
-                    ))}
+                <div id="roteiro" className="border-t pt-4 mt-6 scroll-mt-32">
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-base font-medium flex items-center">
+                      <Calendar className="h-4 w-4 mr-2 text-pink-500" />
+                      Roteiro
+                    </h3>
+                    <div className="flex space-x-2">
+                      <Button variant="ghost" size="sm" className="h-8">
+                        <Calendar className="h-4 w-4 mr-1" />
+                        Calendário
+                      </Button>
+                      <Button variant="ghost" size="sm" className="h-8">
+                        <List className="h-4 w-4 mr-1" />
+                        Lista
+                      </Button>
+                    </div>
                   </div>
-                </div>
-
-                {/* Mensagens */}
-                <div className="border-t pt-4 mt-6">
-                  <h3 className="text-base font-medium mb-3 flex items-center">
-                    <MessageCircle className="h-4 w-4 mr-2 text-pink-500" />
-                    Mensagens
-                  </h3>
                   <div className="space-y-3">
                     {[
-                      {
-                        author: "Juliana Costa",
-                        content: "Ana, que essa nova fase seja repleta de amor e felicidade! Estou muito feliz por você!",
-                        date: "2 dias atrás",
-                      },
-                      {
-                        author: "Fernanda Oliveira",
-                        content: "Amiga, você merece toda a felicidade do mundo! Mal posso esperar para celebrar com você!",
-                        date: "1 dia atrás",
-                      },
-                    ].map((message, i) => (
-                      <div key={i} className="bg-pink-50 p-3 rounded-lg">
-                        <p className="italic text-gray-700 mb-2 text-sm">"{message.content}"</p>
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center">
-                            <Avatar className="h-6 w-6 mr-2">
-                              <AvatarFallback className="bg-pink-200 text-pink-700 text-xs">
-                                {message.author.charAt(0)}
-                              </AvatarFallback>
-                            </Avatar>
-                            <span className="text-xs font-medium">{message.author}</span>
-                          </div>
-                          <span className="text-xs text-gray-500">{message.date}</span>
+                      { time: "16:00", activity: "Check-in no resort", location: "Resort Praia do Forte", status: "confirmed" },
+                      { time: "19:00", activity: "Jantar de boas-vindas", location: "Restaurante do resort", status: "confirmed" },
+                      { time: "21:30", activity: "Drinks e jogos", location: "Bar da piscina", status: "pending" },
+                    ].map((event, i) => (
+                      <div key={i} className="flex border-l-2 border-pink-300 pl-3 py-2 hover:bg-pink-50/50 rounded-r-lg transition-colors">
+                        <div className="w-16">
+                          <div className="font-medium text-pink-600 text-sm">{event.time}</div>
+                          <Badge variant="secondary" className={cn(
+                            "text-xs mt-1",
+                            event.status === "confirmed" ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700"
+                          )}>
+                            {event.status === "confirmed" ? "Confirmado" : "Pendente"}
+                          </Badge>
                         </div>
+                        <div className="flex-1">
+                          <h4 className="font-medium text-sm">{event.activity}</h4>
+                          <p className="text-gray-500 text-xs flex items-center">
+                            <MapPin className="h-3 w-3 mr-1 inline" />
+                            {event.location}
+                          </p>
+                        </div>
+                        <Button variant="ghost" size="sm" className="opacity-0 group-hover:opacity-100 h-8 w-8 p-0">
+                          <MoreVertical className="h-4 w-4" />
+                        </Button>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 {/* Madrinhas */}
-                <div className="border-t pt-4 mt-6">
-                  <h3 className="text-base font-medium mb-3 flex items-center">
-                    <Users className="h-4 w-4 mr-2 text-pink-500" />
-                    Madrinhas
-                  </h3>
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      {[
-                        {
-                          name: "Mariana Silva",
-                          role: "Madrinha da Zueira",
-                          message: "Vamos fazer dessa despedida a melhor de todas!",
-                          avatar: "/images/bridesmaids/mariana.jpg"
-                        },
-                        {
-                          name: "Juliana Costa",
-                          role: "Madrinha das Fotos",
-                          message: "Pronta para registrar todos os momentos!",
-                          avatar: "/images/bridesmaids/juliana.jpg"
-                        },
-                      ].map((bridesmaid, i) => (
-                        <div key={i} className="bg-pink-50 p-3 rounded-lg">
-                          <div className="flex items-center mb-2">
-                            <Avatar className="h-10 w-10 mr-2">
-                              <Image
-                                src={bridesmaid.avatar}
-                                alt={bridesmaid.name}
-                                width={40}
-                                height={40}
-                                className="rounded-full"
-                              />
-                            </Avatar>
-                            <div>
+                <div id="madrinhas" className="border-t pt-4 mt-6 scroll-mt-32">
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-base font-medium flex items-center">
+                      <Users className="h-4 w-4 mr-2 text-pink-500" />
+                      Madrinhas
+                    </h3>
+                    <Button variant="outline" size="sm" className="h-8">
+                      <Crown className="h-4 w-4 mr-1" />
+                      Ver Papéis
+                    </Button>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    {[
+                      {
+                        name: "Mariana Silva",
+                        role: "Madrinha da Zueira",
+                        message: "Vamos fazer dessa despedida a melhor de todas!",
+                        avatar: "/images/bridesmaids/mariana.jpg",
+                        tasks: 3,
+                        tasksCompleted: 2
+                      },
+                      {
+                        name: "Juliana Costa",
+                        role: "Madrinha das Fotos",
+                        message: "Pronta para registrar todos os momentos!",
+                        avatar: "/images/bridesmaids/juliana.jpg",
+                        tasks: 4,
+                        tasksCompleted: 1
+                      },
+                    ].map((bridesmaid, i) => (
+                      <div key={i} className="bg-pink-50/50 p-4 rounded-lg hover:bg-pink-50 transition-colors">
+                        <div className="flex items-start space-x-3">
+                          <Avatar className="h-12 w-12 border-2 border-white shadow-sm">
+                            <Image
+                              src={bridesmaid.avatar}
+                              alt={bridesmaid.name}
+                              width={48}
+                              height={48}
+                              className="rounded-full"
+                            />
+                          </Avatar>
+                          <div className="flex-1">
+                            <div className="flex items-center justify-between">
                               <h4 className="font-medium text-sm">{bridesmaid.name}</h4>
-                              <p className="text-xs text-pink-600">{bridesmaid.role}</p>
+                              <Badge className="bg-pink-100 text-pink-700 border-0">
+                                {bridesmaid.tasksCompleted}/{bridesmaid.tasks}
+                              </Badge>
                             </div>
+                            <p className="text-xs text-pink-600">{bridesmaid.role}</p>
+                            <p className="text-xs text-gray-600 mt-2 italic">"{bridesmaid.message}"</p>
                           </div>
-                          <p className="text-xs text-gray-600 italic">"{bridesmaid.message}"</p>
                         </div>
-                      ))}
-                    </div>
+                        <div className="mt-3 pt-3 border-t border-pink-100">
+                          <div className="flex items-center justify-between text-xs text-gray-500">
+                            <span>Progresso das Tarefas</span>
+                            <span>{Math.round((bridesmaid.tasksCompleted / bridesmaid.tasks) * 100)}%</span>
+                          </div>
+                          <div className="h-1.5 bg-pink-100 rounded-full mt-1">
+                            <div
+                              className="h-full bg-pink-500 rounded-full"
+                              style={{ width: `${(bridesmaid.tasksCompleted / bridesmaid.tasks) * 100}%` }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
@@ -415,4 +462,3 @@ export default function PreviewOnlyPage() {
     </div>
   )
 }
-
